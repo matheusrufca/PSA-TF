@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace Matheus.Data
 
 	public class Car
 	{
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid CarId { get; set; }
 		
 		public string LicencePlate { get; set; }
@@ -47,6 +49,8 @@ namespace Matheus.Data
 
 	public class FuelSupply
 	{
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid FuelSupplyId { get; set; }
 
 		public string FuelType { get; set; }
@@ -57,6 +61,7 @@ namespace Matheus.Data
 
 		public string FuelPrice { get; set; }
 
+		public bool isNewSerie { get; set; }
 
 
 		public virtual Car CarSupplied { get; set; }
@@ -65,6 +70,7 @@ namespace Matheus.Data
 
 	public class FuelType
 	{
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid Id { get; set; }
 
 		public string Name { get; set; }

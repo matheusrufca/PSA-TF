@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,20 @@ namespace Matheus.Web
 			);
 
 			// return api request as JSON
-			config.Formatters.Add(new BrowserJsonFormatter());
+			//config.Formatters.Add(new BrowserJsonFormatter());
+
+
+			RegisterJsonFormattingSettings(GlobalConfiguration.Configuration.Formatters.JsonFormatter);
+		}
+
+		private static void RegisterJsonFormattingSettings(JsonMediaTypeFormatter jsonFormatter)
+		{
+			//GlobalConfiguration.Configuration.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
+
+			jsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+			jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			jsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+			jsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
 		}
 	}
 
@@ -43,4 +57,11 @@ namespace Matheus.Web
 			headers.ContentType = new MediaTypeHeaderValue("application/json");
 		}
 	}
+
+
+
+
+
+
+	
 }

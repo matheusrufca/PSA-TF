@@ -21,7 +21,8 @@ namespace Matheus.Web
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataContext>());
+
+			GlobalConfiguration.Configure(DatabaseConfig.Register);
 		}
 	}
 }

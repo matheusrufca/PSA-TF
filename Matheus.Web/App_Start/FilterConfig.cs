@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using Matheus.Web.Config;
+using Matheus.Web.Config.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Matheus.Web
@@ -8,6 +10,7 @@ namespace Matheus.Web
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
 			filters.Add(new HandleErrorAttribute());
+			//filters.Add(new JsonResponseActionFilterAttribute());
 		}
 	}
 }
