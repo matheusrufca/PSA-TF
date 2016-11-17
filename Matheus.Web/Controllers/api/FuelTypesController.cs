@@ -9,125 +9,141 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Matheus.Data;
+using Web.Models;
+using AutoMapper;
+using Ninject;
 
 namespace Matheus.Web.Controllers
 {
-    public class FuelTypesController : ApiController
-    {
-        private DataContext db = new DataContext();
+	public class FuelTypesController : ApiController
+	{
+		private readonly IMapper _mapper;
+		private readonly DataContext _context;
 
-        // GET: api/FuelTypes
-        public IQueryable<FuelType> GetFuelTypes()
-        {
-            return db.FuelTypes;
-        }
 
-        // GET: api/FuelTypes/5
-        [ResponseType(typeof(FuelType))]
-        public IHttpActionResult GetFuelType(Guid id)
-        {
-            FuelType fuelType = db.FuelTypes.Find(id);
-            if (fuelType == null)
-            {
-                return NotFound();
-            }
+		public FuelTypesController(DataContext context, IMapper mapper)
+		{
+			this._context = context;
+			this._mapper = mapper;
+		}
 
-            return Ok(fuelType);
-        }
 
-        // PUT: api/FuelTypes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutFuelType(Guid id, FuelType fuelType)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != fuelType.Id)
-            {
-                return BadRequest();
-            }
+		// GET: api/FuelTypes
+		public IEnumerable<FuelTypeModel> GetFuelTypes()
+		{
+			var itemList = _context.FuelTypes;
+			var result = _mapper.Map<IEnumerable<FuelType>, List<FuelTypeModel>>(itemList);
 
-            db.Entry(fuelType).State = EntityState.Modified;
+			return result;
+		}
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FuelTypeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+		// GET: api/FuelTypes/5
+		[ResponseType(typeof(FuelTypeModel))]
+		public IHttpActionResult GetFuelType(Guid id)
+		{
+			FuelType fuelType = _context.FuelTypes.Find(id);
+			if (fuelType == null)
+			{
+				return NotFound();
+			}
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+			return Ok(fuelType);
+		}
 
-        // POST: api/FuelTypes
-        [ResponseType(typeof(FuelType))]
-        public IHttpActionResult PostFuelType(FuelType fuelType)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+		// PUT: api/FuelTypes/5
+		[ResponseType(typeof(void))]
+		public IHttpActionResult PutFuelType(Guid id, FuelType fuelType)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            db.FuelTypes.Add(fuelType);
+			if (id != fuelType.Id)
+			{
+				return BadRequest();
+			}
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (FuelTypeExists(fuelType.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			_context.Entry(fuelType).State = EntityState.Modified;
 
-            return CreatedAtRoute("DefaultApi", new { id = fuelType.Id }, fuelType);
-        }
+			try
+			{
+				_context.SaveChanges();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!FuelTypeExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-        // DELETE: api/FuelTypes/5
-        [ResponseType(typeof(FuelType))]
-        public IHttpActionResult DeleteFuelType(Guid id)
-        {
-            FuelType fuelType = db.FuelTypes.Find(id);
-            if (fuelType == null)
-            {
-                return NotFound();
-            }
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-            db.FuelTypes.Remove(fuelType);
-            db.SaveChanges();
+		// POST: api/FuelTypes
+		[ResponseType(typeof(FuelType))]
+		public IHttpActionResult PostFuelType(FuelType fuelType)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            return Ok(fuelType);
-        }
+			_context.FuelTypes.Add(fuelType);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+			try
+			{
+				_context.SaveChanges();
+			}
+			catch (DbUpdateException)
+			{
+				if (FuelTypeExists(fuelType.Id))
+				{
+					return Conflict();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-        private bool FuelTypeExists(Guid id)
-        {
-            return db.FuelTypes.Count(e => e.Id == id) > 0;
-        }
-    }
+			return CreatedAtRoute("DefaultApi", new { id = fuelType.Id }, fuelType);
+		}
+
+		// DELETE: api/FuelTypes/5
+		[ResponseType(typeof(FuelType))]
+		public IHttpActionResult DeleteFuelType(Guid id)
+		{
+			FuelType fuelType = _context.FuelTypes.Find(id);
+			if (fuelType == null)
+			{
+				return NotFound();
+			}
+
+			_context.FuelTypes.Remove(fuelType);
+			_context.SaveChanges();
+
+			return Ok(fuelType);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_context.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private bool FuelTypeExists(Guid id)
+		{
+			return _context.FuelTypes.Count(e => e.Id == id) > 0;
+		}
+	}
 }

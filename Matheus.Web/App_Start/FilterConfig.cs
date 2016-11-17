@@ -1,5 +1,5 @@
-﻿using Matheus.Web.Config;
-using Matheus.Web.Config.Filters;
+﻿using Matheus.Web.Configs;
+using Matheus.Web.Configs.Filters;
 using System.Web;
 using System.Web.Mvc;
 

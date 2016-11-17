@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Ninject.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace Matheus.Web
 			);
 
 			// return api request as JSON
-			//config.Formatters.Add(new BrowserJsonFormatter());
+			config.Formatters.Add(new BrowserJsonFormatter());
+
 
 
 			RegisterJsonFormattingSettings(GlobalConfiguration.Configuration.Formatters.JsonFormatter);

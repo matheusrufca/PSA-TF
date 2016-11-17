@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Http.Filters;
 
-namespace Matheus.Web.Config.Filters
+namespace Matheus.Web.Configs.Filters
 {
 	
 	public class JsonResponseActionFilterAttribute : ActionFilterAttribute

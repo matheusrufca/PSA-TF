@@ -1,4 +1,5 @@
 ﻿using Matheus.Data;
+using Matheus.Web.Configs.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,6 +24,8 @@ namespace Matheus.Web
 
 
 			GlobalConfiguration.Configure(DatabaseConfig.Register);
+
+			//AutoMapperConfig.Register();
 		}
 	}
 }
