@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Matheus.Web.Config.Filters;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ninject.Web.Mvc;
 using System;
@@ -25,10 +26,10 @@ namespace Matheus.Web
 				defaults: new { id = RouteParameter.Optional }
 			);
 
-			// return api request as JSON
-			config.Formatters.Add(new BrowserJsonFormatter());
 
+			config.Formatters.Add(new BrowserJsonFormatter()); // return api request as JSON
 
+			config.Filters.Add(new JsonResponseActionFilterAttribute()); // wrap api response
 
 			RegisterJsonFormattingSettings(GlobalConfiguration.Configuration.Formatters.JsonFormatter);
 		}
@@ -65,5 +66,5 @@ namespace Matheus.Web
 
 
 
-	
+
 }

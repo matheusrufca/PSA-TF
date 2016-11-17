@@ -31,7 +31,7 @@ namespace Matheus.Web.Controllers
 		// GET: api/FuelTypes
 		public IEnumerable<FuelTypeModel> GetFuelTypes()
 		{
-			var itemList = _context.FuelTypes.DistinctBy(x => x.Name.ToUpper()).ToList();
+			var itemList = _context.FuelTypes.DistinctBy(x => x.Name.ToUpper());
 			var result = _mapper.Map<IEnumerable<FuelType>, IEnumerable<FuelTypeModel>>(itemList);
 
 			return result;

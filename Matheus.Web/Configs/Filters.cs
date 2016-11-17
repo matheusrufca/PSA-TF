@@ -4,12 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
-using System.Web;
 using System.Web.Http.Filters;
 
-namespace Matheus.Web.Configs.Filters
+namespace Matheus.Web.Config.Filters
 {
-	
+
+	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+
 	public class JsonResponseActionFilterAttribute : ActionFilterAttribute
 	{
 		public override void OnActionExecuted(HttpActionExecutedContext context)
@@ -43,7 +44,7 @@ namespace Matheus.Web.Configs.Filters
 				jsonResponse = new JsonResponse<object>()
 				{
 					StatusCode = (int)response.StatusCode,
-					Result = content,
+					Result = content.Value,
 					StatusMessage = response.ReasonPhrase,
 					ErrorData = String.IsNullOrWhiteSpace(errorDetail) ? null : errorDetail
 				};
