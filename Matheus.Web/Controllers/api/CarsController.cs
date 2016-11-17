@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Matheus.Data;
 using Matheus.Data.DAL;
+using MoreLinq;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -13,7 +15,7 @@ using Web.Models;
 namespace Matheus.Web.Controllers.api
 {
 	public class CarsController : ApiController
-    {
+	{
 
 
 		private readonly IMapper _mapper;
@@ -27,104 +29,127 @@ namespace Matheus.Web.Controllers.api
 		}
 
 		// GET: api/Cars
-		public IQueryable<Car> GetCars()
-        {
-            return _context.Cars;
-        }
+		public IHttpActionResult GetCars()
+		{
+			var itemList = _context.Cars.DistinctBy(x => x.LicencePlate.ToUpper());
+			var result = _mapper.Map<IEnumerable<Car>, IEnumerable<CarModel>>(itemList);
 
-        // GET: api/Cars/5
-        [ResponseType(typeof(Car))]
-        public IHttpActionResult GetCar(Guid id)
-        {
-            Car car = _context.Cars.Find(id);
-            if (car == null)
-            {
-                return NotFound();
-            }
+			return Ok(result);
+		}
 
-            return Ok(car);
-        }
+		// GET: api/Cars/5
+		[ResponseType(typeof(CarModel))]
+		public IHttpActionResult GetCar(Guid id)
+		{
+			Car car;
+			CarModel result;
 
-        // PUT: api/Cars/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCar(Guid id, Car car)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			car = _context.Cars.Find(id);
+			result = _mapper.Map<CarModel>(car);
 
-            if (id != car.CarId)
-            {
-                return BadRequest();
-            }
+			if (car == null)
+			{
+				return NotFound();
+			}
 
-            _context.Entry(car).State = EntityState.Modified;
+			return Ok(result);
+		}
 
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CarExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+		// PUT: api/Cars/5
+		[ResponseType(typeof(void))]
+		public IHttpActionResult PutCar(Guid id, EditCarViewModel model)
+		{
+			Car car = null;
+			CarModel result;
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
 
-        // POST: api/Cars
-        [ResponseType(typeof(Car))]
-        public IHttpActionResult PostCar(CarModel car)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-			var mappedItem = _mapper.Map<Car>(car);
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
 
-			_context.Cars.Add(mappedItem);
-            _context.SaveChanges();
+			if (id != model.Id)
+				return BadRequest();
 
-            return CreatedAtRoute("DefaultApi", new { id = mappedItem.CarId }, car);
-        }
+			if (!CarExists(id))
+				return NotFound();
 
-        // DELETE: api/Cars/5
-        [ResponseType(typeof(Car))]
-        public IHttpActionResult DeleteCar(Guid id)
-        {
-            Car car = _context.Cars.Find(id);
-            if (car == null)
-            {
-                return NotFound();
-            }
 
-            _context.Cars.Remove(car);
-            _context.SaveChanges();
+			try
+			{
+				car = _mapper.Map<Car>(model);
+				_context.Entry(car).State = EntityState.Modified;
+				_context.SaveChanges();
+			}
+			catch (DbUpdateConcurrencyException ex)
+			{
+				throw ex;
+			}
+			finally
+			{
 
-            return Ok(car);
-        }
+				result = _mapper.Map<CarModel>(car);
+			}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _context.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+			return Ok(result);
+		}
 
-        private bool CarExists(Guid id)
-        {
-            return _context.Cars.Count(e => e.CarId == id) > 0;
-        }
-    }
+		// POST: api/Cars
+		[ResponseType(typeof(CarModel))]
+		public IHttpActionResult PostCar(CreateCarViewModel model)
+		{
+			Car car = null;
+			CarModel result;
+
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				car = _mapper.Map<CreateCarViewModel, Car>(model);
+
+				_context.Cars.Add(car);
+				_context.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				result = _mapper.Map<Car, CarModel>(car);
+			}
+
+			return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
+		}
+
+		// DELETE: api/Cars/5
+		[ResponseType(typeof(Car))]
+		public IHttpActionResult DeleteCar(Guid id)
+		{
+			Car car = _context.Cars.Find(id);
+			CarModel result;
+			if (car == null)
+				return NotFound();
+
+			_context.Cars.Remove(car);
+			_context.SaveChanges();
+			result = _mapper.Map<Car, CarModel>(car);
+
+			return Ok(result);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_context.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private bool CarExists(Guid id)
+		{
+			return _context.Cars.Any(e => e.CarId == id);
+		}
+	}
 }

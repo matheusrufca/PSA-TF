@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace Web.Models
 {
+	[Serializable]
 	public class CarModel
 	{
+		public Guid Id { get; set; }
+
 		public string LicencePlate { get; set; }
 
 		public string Model { get; set; }
@@ -30,16 +34,20 @@ namespace Web.Models
 
 	public class FuelSupplyModel
 	{
+		public Guid Id { get; set; }
+
 		public string FuelQuantity { get; set; }
 
-		public string TotalPrice { get; set; }
+		public decimal TotalPrice { get; set; }
 
 		public FuelTypeModel FuelType { get; set; }
 	}
 
 
-	public class FuelTypeModel {
+	public class FuelTypeModel
+	{
+		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public string Price { get; set; }
+		public decimal Price { get; set; }
 	}
 }

@@ -22,11 +22,23 @@ namespace Matheus.Web.Configs.Mappings
 	{
 		protected override void Configure()
 		{
+			CreateMap<Car, CarModel>()
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.CarId));
+
+			CreateMap<CarModel, Car>()
+				.ForMember(dest => dest.CarId, opts => opts.MapFrom(src => src.Id));
+
 			CreateMap<Car, CarFormViewModel>();
 			CreateMap<CarFormViewModel, Car>();
 
-			CreateMap<Car, CarModel>();
-			CreateMap<CarModel, Car>();
+			CreateMap<Car, CreateCarViewModel>();
+			CreateMap<CreateCarViewModel, Car>();
+
+
+			CreateMap<Car, EditCarViewModel>()
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.CarId));
+			CreateMap<EditCarViewModel, Car>()
+				.ForMember(dest => dest.CarId, opts => opts.MapFrom(src => src.Id));
 
 
 			CreateMap<Odometer, OdometerModel>();

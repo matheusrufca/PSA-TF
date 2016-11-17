@@ -1,33 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace Web.Models
 {
-	public class CarFormViewModel {
+	public class CarFormViewModel
+	{
+		[Required]
 		public string LicencePlate { get; set; }
 
+		[Required]
 		public string Model { get; set; }
 
-		public int Year { get; set; }
+		[Required]
+		public int? Year { get; set; }
 
+		[Required]
+		[StringLength(7)]
 		public string Manufacturer { get; set; }
 
+		[Required]
 		public decimal FuelTankSize { get; set; }
 
+		[Required]
 		public OdometerModel Odometer { get; set; }
 	}
 
 
 	public class CreateCarViewModel : CarFormViewModel
 	{
-		
+
 	}
 
 
 	public class EditCarViewModel : CarFormViewModel
 	{
+		[Required]
+		public Guid Id { get; set; }
 	}
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
+using System.Web.Http;
 using System.Web.Http.Filters;
 
 namespace Matheus.Web.Config.Filters
@@ -16,16 +17,28 @@ namespace Matheus.Web.Config.Filters
 		public override void OnActionExecuted(HttpActionExecutedContext context)
 		{
 			ObjectContent content;
-			JsonResponse<object> jsonResponse;
+			JsonResponse<object> jsonResponse = null;
 
-			content = context.Response.Content as ObjectContent;
-
-
-			if (content != null)
+			try
 			{
+
 				jsonResponse = this.BuildApiResponse(context.Response);
-				content.Value = jsonResponse;
+
+				try
+				{
+					content = context.Response.Content as ObjectContent;
+
+					if (content != null)
+					{
+						content.Value = jsonResponse;
+					}
+				}
+				catch (Exception ex)
+				{
+					context.Response.Content = new ObjectContent<JsonResponse<object>>(jsonResponse, GlobalConfiguration.Configuration.Formatters.JsonFormatter);
+				}
 			}
+			catch (Exception ex) { }
 		}
 
 
@@ -49,7 +62,8 @@ namespace Matheus.Web.Config.Filters
 					ErrorData = String.IsNullOrWhiteSpace(errorDetail) ? null : errorDetail
 				};
 			}
-			catch (Exception ex) {
+			catch (Exception ex)
+			{
 				jsonResponse = new JsonResponse<object>()
 				{
 					StatusCode = (int)response.StatusCode,
