@@ -5,7 +5,7 @@ namespace Matheus.Web.App_Start
 {
 	using AutoMapper;
 	using Configs.Mappings;
-	using Data;
+	using Data.DAL;
 	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 	using Ninject;
 	using Ninject.Web.Common;

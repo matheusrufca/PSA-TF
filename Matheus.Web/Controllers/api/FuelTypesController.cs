@@ -1,17 +1,16 @@
-﻿using System;
+﻿using AutoMapper;
+using Matheus.Data;
+using Matheus.Data.DAL;
+using MoreLinq;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Matheus.Data;
 using Web.Models;
-using AutoMapper;
-using Ninject;
 
 namespace Matheus.Web.Controllers
 {
@@ -32,8 +31,8 @@ namespace Matheus.Web.Controllers
 		// GET: api/FuelTypes
 		public IEnumerable<FuelTypeModel> GetFuelTypes()
 		{
-			var itemList = _context.FuelTypes;
-			var result = _mapper.Map<IEnumerable<FuelType>, List<FuelTypeModel>>(itemList);
+			var itemList = _context.FuelTypes.DistinctBy(x => x.Name.ToUpper()).ToList();
+			var result = _mapper.Map<IEnumerable<FuelType>, IEnumerable<FuelTypeModel>>(itemList);
 
 			return result;
 		}

@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AutoMapper;
+using Matheus.Data;
+using Matheus.Data.DAL;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Matheus.Data;
 using Web.Models;
-using AutoMapper;
 
 namespace Matheus.Web.Controllers.api
 {
-    public class CarsController : ApiController
+	public class CarsController : ApiController
     {
 
 

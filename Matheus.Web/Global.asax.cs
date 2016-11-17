@@ -23,7 +23,7 @@ namespace Matheus.Web
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 
-			GlobalConfiguration.Configure(DatabaseConfig.Register);
+			//GlobalConfiguration.Configure(DatabaseConfig.Register);
 
 			//AutoMapperConfig.Register();
 		}

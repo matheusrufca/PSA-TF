@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Matheus.Data
+namespace Matheus.Data.DAL
 {
 	public class BlogContext : DbContext
 	{
