@@ -64,6 +64,4 @@ namespace Matheus.Web.Configs.Mappings
 			CreateMap<FuelTypeModel, FuelType>();
 		}
 	}
-
-
 }

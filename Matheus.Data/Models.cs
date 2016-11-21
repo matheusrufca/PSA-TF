@@ -53,7 +53,7 @@ namespace Matheus.Data
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid FuelSupplyId { get; set; }
 
-		public string FuelType { get; set; }
+		public FuelType FuelType { get; set; }
 
 		public string FuelQuantity { get; set; }
 
@@ -61,7 +61,9 @@ namespace Matheus.Data
 
 		public string FuelPrice { get; set; }
 
-		public bool isNewSerie { get; set; }
+		public DateTime FueledAt { get; set; }
+
+		public bool IsNewSerie { get; set; }
 
 
 		public virtual Car CarSupplied { get; set; }

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Web.Models;
@@ -16,8 +15,6 @@ namespace Matheus.Web.Controllers.api
 {
 	public class CarsController : ApiController
 	{
-
-
 		private readonly IMapper _mapper;
 		private readonly DataContext _context;
 
@@ -48,9 +45,7 @@ namespace Matheus.Web.Controllers.api
 			result = _mapper.Map<CarModel>(car);
 
 			if (car == null)
-			{
 				return NotFound();
-			}
 
 			return Ok(result);
 		}
@@ -62,8 +57,6 @@ namespace Matheus.Web.Controllers.api
 			Car car = null;
 			CarModel result;
 
-
-
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
@@ -72,7 +65,6 @@ namespace Matheus.Web.Controllers.api
 
 			if (!CarExists(id))
 				return NotFound();
-
 
 			try
 			{

@@ -6,7 +6,6 @@ using System.Web;
 
 namespace Web.Models
 {
-	[Serializable]
 	public class CarModel
 	{
 		public Guid Id { get; set; }
@@ -23,6 +22,8 @@ namespace Web.Models
 
 		public OdometerModel Odometer { get; set; }
 
+
+		public ICollection<FuelSupplyModel> FuelSuplies { get; set; }
 	}
 
 
@@ -36,18 +37,26 @@ namespace Web.Models
 	{
 		public Guid Id { get; set; }
 
+		public FuelTypeModel FuelType { get; set; }
+
 		public string FuelQuantity { get; set; }
 
-		public decimal TotalPrice { get; set; }
+		public string TotalPrice { get; set; }
 
-		public FuelTypeModel FuelType { get; set; }
+		public string FuelPrice { get; set; }
+
+		public DateTime FueledAt { get; set; }
+
+		public bool IsNewSerie { get; set; }
 	}
 
 
 	public class FuelTypeModel
 	{
 		public Guid Id { get; set; }
+
 		public string Name { get; set; }
+
 		public decimal Price { get; set; }
 	}
 }

@@ -27,5 +27,18 @@ namespace Matheus.Data.DAL
 		public DbSet<FuelSupply> FuelSupplies { get; set; }
 
 		public DbSet<FuelType> FuelTypes{ get; set; }
+
+
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+
+
+			modelBuilder.Entity<Car>()
+				.HasMany(x => x.FuelSupplies);
+
+			modelBuilder.Entity<FuelSupply>()
+				.HasRequired(x => x.CarSupplied);
+		}
 	}
 }

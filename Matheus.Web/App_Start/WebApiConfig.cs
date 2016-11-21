@@ -1,13 +1,11 @@
 ﻿using Matheus.Web.Config.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ninject.Web.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Matheus.Web
 {
@@ -15,7 +13,9 @@ namespace Matheus.Web
 	{
 		public static void Register(HttpConfiguration config)
 		{
+			var cors = new EnableCorsAttribute("*", "*", "*");
 			// Web API configuration and services
+			config.EnableCors(cors);
 
 			// Web API routes
 			config.MapHttpAttributeRoutes();

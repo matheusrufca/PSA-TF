@@ -51,6 +51,11 @@ namespace Web.Models
 		public string TotalPrice { get; set; }
 
 		public string FuelPrice { get; set; }
+
+
+		public DateTime FueledAt { get; set; }
+
+		public bool IsNewSerie { get; set; }
 	}
 
 }
