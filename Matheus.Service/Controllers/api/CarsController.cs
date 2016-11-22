@@ -104,14 +104,11 @@ namespace Matheus.Web.Controllers.api
 
 				_context.Cars.Add(car);
 				_context.SaveChanges();
+				result = _mapper.Map<Car, CarModel>(car);
 			}
 			catch (Exception ex)
 			{
 				throw ex;
-			}
-			finally
-			{
-				result = _mapper.Map<Car, CarModel>(car);
 			}
 
 			return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);

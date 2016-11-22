@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router'])
+angular.module('app', ['ngAnimate', 'ui.router', 'ui.bootstrap', 'toastr'])
 .config(function ($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/dashboard');

@@ -30,13 +30,11 @@ namespace Matheus.Web.Configs.Mappings
 
 			CreateMap<Car, CarFormViewModel>();
 			CreateMap<CarFormViewModel, Car>();
+			
+			CreateMap<CreateCarViewModel, Car>()
+				.ForMember(dest => dest.Odometer, opt => opt.ResolveUsing(src => new Odometer()));
+				//.ForMember(d => d.Odometer, o => o.NullSubstitute(new Odometer()));
 
-			CreateMap<Car, CreateCarViewModel>();
-			CreateMap<CreateCarViewModel, Car>();
-
-
-			CreateMap<Car, EditCarViewModel>()
-				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.CarId));
 			CreateMap<EditCarViewModel, Car>()
 				.ForMember(dest => dest.CarId, opts => opts.MapFrom(src => src.Id));
 

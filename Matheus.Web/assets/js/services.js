@@ -2,8 +2,10 @@ angular.module('app')
   .constant("apiSettings", {
   	serviceUrl: 'http://localhost:22233/api'
   })
-  .factory('carService', function ($http, $q, apiSettings) {
+  .factory('carService', function ($http, $q, apiSettings, toastr) {
   	var self = {}, service = {};
+
+  	self.errorMsg = 'Ops, ocorreu um erro';
 
   	service.get = function () {
   		var df = $q.defer(), serviceUrl;
@@ -16,6 +18,8 @@ angular.module('app')
   			df.resolve(response.data.data);
   		}, function (err) {
   			df.reject(err); // reject promise
+
+  			toastr.error(err.message || self.errorMsg);
   		});
 
   		return df.promise;
@@ -31,6 +35,8 @@ angular.module('app')
   			df.resolve(response.data.data);
   		}, function (err) {
   			df.reject(err); // reject promise
+
+  			toastr.error(err.message || self.errorMsg);
   		});
 
   		return df.promise;
@@ -51,11 +57,15 @@ angular.module('app')
   		serviceUrl = apiSettings.serviceUrl + '/cars';
 
   		$http.post(serviceUrl, item).then(function (response) {
-  			if (!response.data) { df.reject({}); return; }
+  			var result = response.data;
+  			if (!result) { df.reject({}); return; }
 
-  			df.resolve(response.data.data);
+  			df.resolve(result.data);
+  			toastr.success(result.statusMessage);
   		}, function (err) {
   			df.reject(err); // reject promise
+
+  			toastr.error(err.message || self.errorMsg);
   		});
 
   		return df.promise;
@@ -67,27 +77,36 @@ angular.module('app')
   		serviceUrl = apiSettings.serviceUrl + '/cars/' + item_id;
 
   		$http.put(serviceUrl, item).then(function (response) {
-  			if (!response.data) { df.reject({}); return; }
+  			var result = response.data;
+  			if (!result) { df.reject({}); return; }
 
-  			df.resolve(response.data.data);
+  			df.resolve(result.data);
+  			toastr.success(result.statusMessage);
   		}, function (err) {
   			df.reject(err); // reject promise
+
+  			toastr.error(err.message || self.errorMsg);
   		});
 
   		return df.promise;
   	};
 
-  	service.remove = function (item_id, item) {
+  	service.remove = function (item_id) {
   		var df = $q.defer(), serviceUrl;
 
   		serviceUrl = apiSettings.serviceUrl + '/cars/' + item_id;
 
   		$http.delete(serviceUrl).then(function (response) {
-  			if (!response.data) { df.reject({}); return; }
+  			var result = response.data;
 
+  			if (!result) { df.reject({}); return; }
   			df.resolve(response.data.data);
+
+  			toastr.success(result.statusMessage);
   		}, function (err) {
   			df.reject(err); // reject promise
+
+  			toastr.error(err.message || self.errorMsg);
   		});
 
   		return df.promise;
@@ -96,17 +115,3 @@ angular.module('app')
   	return service;
   });
 
-
-
-angular.module('app')
-	.filter('licencePlate', function () {
-		return function (licencePlate) {
-			var output = '';
-
-			if (!typeof licencePlate == 'string') { return licencePlate; }
-			if (!licencePlate || licencePlate.length < 7) { return licencePlate; }
-
-			output = [licencePlate.substr(0, 3), "-", licencePlate.substr(3)].join('');
-			return output;
-		};
-	});

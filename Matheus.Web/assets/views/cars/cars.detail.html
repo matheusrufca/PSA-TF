@@ -1,39 +1,109 @@
-<h1></h1>
-
-
-<h2 class="sub-header">{{car.model}} - {{car.licencePlate}}</h2>
+<h2 class="sub-header" ng-if="car.id">{{car.model}} - {{car.licencePlate}}</h2>
 
 <div>
 	<form id="form_car" name="form_car">
-		<!-- model -->
+		<input ng-model="car.id" type="hidden" />
+		<div class="row">
+			<div class="col-md-8">
+				<fieldset>
+					<legend>Detalhes</legend>
+
+					<!-- model -->
+					<div class="form-group">
+						<label for="model">Modelo</label>
+						<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" required="" maxlength="255" />
+					</div>
+
+					<!-- manufacturer -->
+					<div class="form-group">
+						<label for="manufacturer">Fabricante</label>
+						<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" required="" maxlength="255" />
+					</div>
+
+					<div class="row">
+						<!-- licencePlate -->
+						<div class="col-md-4 ">
+							<div class="form-group">
+								<label for="licencePlate">Placa</label>
+								<input id="licencePlate" ng-model="car.licencePlate" type="text" class="form-control" placeholder="Placa" required="" maxlength="7" />
+							</div>
+						</div>
+
+						<!-- year -->
+						<div class="col-md-4 ">
+							<div class="form-group">
+								<label for="year">Ano</label>
+								<select class="form-control" ng-options="x for x in getYears()" ng-model="car.year">
+									<option selected="" disabled="">Selecione</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- fuelTankSize -->
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="fuelTankSize">Tanque de combustível</label>
+								<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="Quantidade" required="" min="1" max="1000" />
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="col-md-4">
+				<fieldset ng-if="car.id">
+					<legend>Odômetro</legend>
+					<div class="form-group">
+						<label for="currentDistance">Distância parcial</label>
+						<div class="input-group">
+							<input id="currentDistance" ng-model="car.odometer.currentDistance | number : 2" type="text" class="form-control text-right" readonly="" />
+							<div class="input-group-addon">KM</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="totalDistance">Distância total</label>
+						<div class="input-group">
+							<input id="totalDistance" ng-model="car.odometer.totalDistance | number : 2" type="text" class="form-control text-right" readonly="" />
+							<div class="input-group-addon">KM</div>
+						</div>
+						<div class="text-right" style="margin-top: 5px;">
+							<button class="btn btn-link" ng-click="resetOdometer()">Zerar</button>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		
+		<h4>Abastecimentos</h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th class="text-center">Quantidade</th>
+					<th class="text-center">Valor</th>
+					<th>Combustível</th>
+					<th class="text-center">Data</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in cars">
+					<td class="text-center">{{x.fuelQuantity}}</td>
+					<td class="text-center">{{x.totalPrice}}</td>
+					<td class="text-center">{{x.fuelType}}</td>
+					<td class="text-center">
+						{{x.fueledAt | date}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+
 		<div class="form-group">
-			<label for="model">Modelo</label>
-			<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" />
+			<button type="submit" ng-click="save()" class="btn btn-primary" ng-disabled="form_car.$invalid">Salvar</button>
+			<button class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Adicionar abastecimento</button>
+			<button ng-click="remove()" class="btn btn-danger float-left">Excluir</button>
 		</div>
 
-		<!-- manufacturer -->
-		<div class="form-group">
-			<label for="manufacturer">Fabricante</label>
-			<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" />
-		</div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="form-group">
-					<label for="year">Ano</label>
-					<input id="year" ng-model="car.year" type="number" class="form-control" placeholder="Ano" />
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="form-group">
-					<label for="fuelTankSize">Tanque de combustível</label>
-					<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="80.00" />
-				</div>
-			</div>
-		</div>
-		<input type="hidden" />
-		
-		<button ng-click="save()" class="btn btn-primary">Salvar</button>
 	</form>
 </div>
 
@@ -41,3 +111,57 @@
 
 
 <pre>{{car | json}}</pre>
+
+
+<script type="text/ng-template" id="tmpl_addFuel.html">
+	<div class="modal-header">
+		<h3 class="modal-title" id="modal-title">Adicionar abastecimento</h3>
+	</div>
+	<div class="modal-body" id="modal-body">
+		<form>
+			<!-- model -->
+			<div class="form-group">
+				<label for="model">Modelo</label>
+				<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" required="" maxlength="255" />
+			</div>
+
+			<!-- manufacturer -->
+			<div class="form-group">
+				<label for="manufacturer">Fabricante</label>
+				<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" required="" maxlength="255" />
+			</div>
+
+			<div class="row">
+				<!-- licencePlate -->
+				<div class="col-md-4 ">
+					<div class="form-group">
+						<label for="licencePlate">Placa</label>
+						<input id="licencePlate" ng-model="car.licencePlate" type="text" class="form-control" placeholder="Placa" required="" maxlength="7" />
+					</div>
+				</div>
+
+				<!-- year -->
+				<div class="col-md-4 ">
+					<div class="form-group">
+						<label for="year">Ano</label>
+						<select class="form-control" ng-options="x for x in getYears()" ng-model="car.year">
+							<option selected="" disabled="">Selecione</option>
+						</select>
+					</div>
+				</div>
+
+				<!-- fuelTankSize -->
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="fuelTankSize">Tanque de combustível</label>
+						<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="Quantidade" required="" min="1" max="1000" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+		<button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+	</div>
+</script>

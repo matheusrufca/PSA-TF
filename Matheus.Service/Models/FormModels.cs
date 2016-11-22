@@ -23,9 +23,8 @@ namespace Web.Models
 
 		[Required]
 		public decimal FuelTankSize { get; set; }
-
-		[Required]
-		public OdometerModel Odometer { get; set; }
+		
+		
 	}
 
 
@@ -39,6 +38,9 @@ namespace Web.Models
 	{
 		[Required]
 		public Guid Id { get; set; }
+
+		[Required]
+		public OdometerModel Odometer { get; set; }
 	}
 
 
