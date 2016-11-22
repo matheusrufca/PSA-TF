@@ -1,0 +1,37 @@
+<h1 class="page-header">Lista de carros</h1>
+
+<div class="row placeholders">
+</div>
+
+<h2 class="sub-header">Section title</h2>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="text-center">Placa</th>
+				<th>Modelo</th>
+				<th>Fabricante</th>
+				<th class="text-center">Ano</th>
+				<th class="text-center">Odômetro</th>
+				<th class="text-center">Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="x in cars">
+				<td class="text-center">{{x.licencePlate | licencePlate}}</td>
+				<td>{{x.model}}</td>
+				<td>{{x.manufacturer}}</td>
+				<td class="text-center">{{x.year}}</td>
+				<td class="text-center">{{x.odometer.currentDistance}} / {{x.odometer.totalDistance}} km</td>
+				<td class="text-center"> 
+					<a ui-sref="cars.detail({id: x.id})" class="btn btn-link btn-primary" title="Editar">
+						<i class="glyphicon glyphicon-pencil"></i>
+					</a>
+					<a ng-click="remove(x)" class="btn btn-link btn-danger" title="Remover">
+						<i class="glyphicon glyphicon-remove"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

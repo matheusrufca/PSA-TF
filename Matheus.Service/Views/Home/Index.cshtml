@@ -1,0 +1,31 @@
+﻿
+<div class="row">
+	<!-- sidebar -->
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li class="active">
+				<a href="#">Overview <span class="sr-only">(current)</span></a>
+			</li>
+			<li>
+				<a ui-sref="cars" href="#">Carros</a>
+
+				<a ui-sref="fuelSupply.list" href="#">Abastecimentos</a>
+			</li>
+			<li>
+				<a ui-sref="reports" href="#">Relatórios</a>
+			</li>
+
+			<li>
+				<a ui-sref="cars.detail({id:1})">cars.detail({id:1})</a>
+				<br />
+				<a ui-sref="cars.detail({id:2})">cars.detail({id:2})</a>
+				<br />
+				<a ui-sref="cars.detail({id:3})">cars.detail({id:3})</a>
+			</li>
+		</ul>
+	</div>
+
+	<!-- main view -->
+	<div ui-view="main" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	</div>
+</div>

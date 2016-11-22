@@ -1,0 +1,26 @@
+<div>
+  <h4>Dashboard</h4>
+
+  <hr />
+  <div>
+    <ul class="nav nav-sidebar">
+      <li  ui-sref-active="active">
+        <a ui-sref="dashboard" href="#">Dashboard <span class="sr-only">(current)</span></a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="cars" href="#" >Carros</a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="reports" href="#" >Relatórios</a>
+      </li>
+
+      <li>
+      </ul>
+
+
+      <a ui-sref="cars.detail({id:1})">cars.detail({id:1})</a><br />
+      <a ui-sref="dashboard.content({id:2})">list.detail({id:2})</a><br />
+      <a ui-sref="dashboard.content({id:3})">list.detail({id:3})</a>
+
+    </div>
+  </div>

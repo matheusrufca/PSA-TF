@@ -1,0 +1,43 @@
+<h1></h1>
+
+
+<h2 class="sub-header">{{car.model}} - {{car.licencePlate}}</h2>
+
+<div>
+	<form id="form_car" name="form_car">
+		<!-- model -->
+		<div class="form-group">
+			<label for="model">Modelo</label>
+			<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" />
+		</div>
+
+		<!-- manufacturer -->
+		<div class="form-group">
+			<label for="manufacturer">Fabricante</label>
+			<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" />
+		</div>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="year">Ano</label>
+					<input id="year" ng-model="car.year" type="number" class="form-control" placeholder="Ano" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="fuelTankSize">Tanque de combustível</label>
+					<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="80.00" />
+				</div>
+			</div>
+		</div>
+		<input type="hidden" />
+		
+		<button ng-click="save()" class="btn btn-primary">Salvar</button>
+	</form>
+</div>
+
+
+
+
+<pre>{{car | json}}</pre>

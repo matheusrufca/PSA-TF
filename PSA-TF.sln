@@ -10,7 +10,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.Data", "Matheus.Data\Matheus.Data.csproj", "{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.Web", "Matheus.Web\Matheus.Web.csproj", "{0C76BC09-60C9-4656-B3D9-844E460417EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.Service", "Matheus.Service\Matheus.Service.csproj", "{0C76BC09-60C9-4656-B3D9-844E460417EA}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Matheus.Web(2)", "Matheus.Web\", "{232CFA85-BF0B-4B58-BE2D-596A9BCEF5B5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_18698"
+		Debug.AspNetCompiler.PhysicalPath = "Matheus.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_18698\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_18698"
+		Release.AspNetCompiler.PhysicalPath = "Matheus.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_18698\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "18698"
+		SlnRelativePath = "Matheus.Web\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +47,10 @@ Global
 		{0C76BC09-60C9-4656-B3D9-844E460417EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C76BC09-60C9-4656-B3D9-844E460417EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C76BC09-60C9-4656-B3D9-844E460417EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232CFA85-BF0B-4B58-BE2D-596A9BCEF5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232CFA85-BF0B-4B58-BE2D-596A9BCEF5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232CFA85-BF0B-4B58-BE2D-596A9BCEF5B5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{232CFA85-BF0B-4B58-BE2D-596A9BCEF5B5}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
