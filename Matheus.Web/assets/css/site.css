@@ -1,0 +1,19 @@
+.bold {
+	font-weight: bold;
+}
+
+
+.transformable {
+	-ms-transition: height 100ms linear;
+	-o-transition: height 100ms linear;
+	-webkit-transition: height 100ms linear;
+	transition: height 100ms linear;
+}
+
+.small {
+	height: 50px;
+}
+
+.big {
+	height: auto;
+}

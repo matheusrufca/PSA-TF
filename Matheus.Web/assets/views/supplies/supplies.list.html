@@ -1,6 +1,3 @@
-
-<h2 class="sub-header">Section title</h2>
-
 <div class="row text-right" style="margin-bottom: 20px">
 	<div class="btn-group" role="group">
 		<button ng-click="getFuelSupplies()" class="btn btn-default  btn-sm">&nbsp;<i class="glyphicon glyphicon-refresh"></i>&nbsp;</button>
@@ -14,22 +11,32 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th class="">Carro</th>
-				<th class="text-center">Placa</th>
+				<!--<th class="">Carro</th>
+				<th class="text-center">Placa</th>-->
+				<th class="">Combustível</th>
+				<th class="text-center">Preço</th>
 				<th class="text-center">Quantidade</th>
 				<th class="text-center">Valor total</th>
-				<th class="">Combustível</th>
 				<th class="text-center">Data</th>
 				<th class="text-center">Ação</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr ng-repeat="x in fuelSupplies">
-				<td class="">{{x.carSupplied.model}}</td>
-				<td class="text-center">{{x.carSupplied.licencePlate | licencePlate}}</td>
-				<td class="text-center">{{x.fuelQuantity | number : 2}}</td>
-				<td class="text-center">{{x.totalPrice | currency}}</td>
+		<tbody ng-repeat="(key, value) in fuelSupplies | groupBy: 'carSupplied.id'">
+			<tr>
+				<td class="bold" colspan="5">
+					{{value[key].carSupplied.model}} ({{value[key].carSupplied.licencePlate | licencePlate}})
+				</td>
+				<td class="text-center" colspan="">
+					<a ui-sref="cars.detail({id: x.id})" class="btn btn-default btn-sm" title="Novo">
+						<i class="glyphicon glyphicon-plus"></i> Novo
+					</a>
+				</td>
+			</tr>
+			<tr ng-repeat="x in value">
 				<td class="">{{x.fuelType.name}}</td>
+				<td class="text-center">{{x.fuelPrice | currency}} L</td>
+				<td class="text-center">{{x.fuelQuantity | number}} L</td>
+				<td class="text-center">{{x.totalPrice | currency}}</td>
 				<td class="text-center">{{x.fueledAt | date}}</td>
 
 				<td class="text-center">
@@ -43,6 +50,6 @@
 </div>
 
 
-<pre>
+<pre class="transformable" ng-class="{'small':!isBig, 'big':isBig}" ng-click="isBig = !isBig">
 	{{fuelSupplies | json}}
 </pre>

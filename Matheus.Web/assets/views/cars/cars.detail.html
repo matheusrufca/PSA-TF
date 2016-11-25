@@ -1,23 +1,24 @@
-<h2 class="sub-header" ng-if="car.id">{{car.model}} - {{car.licencePlate}}</h2>
+
 
 <div>
 	<form id="form_car" name="form_car">
-		<input ng-model="car.id" type="hidden" />
+		<!--<h4 class="sub-header" ng-if="car.id">{{car.model}} ({{car.licencePlate}})</h4>-->
+		<input ng-model="car.id" type="hidden"/>
 		<div class="row">
 			<div class="col-md-8">
 				<fieldset>
-					<legend>Detalhes</legend>
+					<legend>{{car.model}} ({{car.licencePlate}})</legend>
 
 					<!-- model -->
 					<div class="form-group">
 						<label for="model">Modelo</label>
-						<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" required="" maxlength="255" />
+						<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" required="" maxlength="255"/>
 					</div>
 
 					<!-- manufacturer -->
 					<div class="form-group">
 						<label for="manufacturer">Fabricante</label>
-						<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" required="" maxlength="255" />
+						<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" required="" maxlength="255"/>
 					</div>
 
 					<div class="row">
@@ -25,7 +26,7 @@
 						<div class="col-md-4 ">
 							<div class="form-group">
 								<label for="licencePlate">Placa</label>
-								<input id="licencePlate" ng-model="car.licencePlate" type="text" class="form-control" placeholder="Placa" required="" maxlength="7" />
+								<input id="licencePlate" ng-model="car.licencePlate" type="text" class="form-control" placeholder="Placa" required="" maxlength="7"/>
 							</div>
 						</div>
 
@@ -43,7 +44,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="fuelTankSize">Tanque de combustível</label>
-								<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="Quantidade" required="" min="1" max="1000" />
+								<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="Quantidade" required="" min="1" max="1000"/>
 							</div>
 						</div>
 					</div>
@@ -56,7 +57,7 @@
 					<div class="form-group">
 						<label for="currentDistance">Distância parcial</label>
 						<div class="input-group">
-							<input id="currentDistance" ng-model="car.odometer.currentDistance | number : 2" type="text" class="form-control text-right" readonly="" />
+							<input id="currentDistance" ng-model="car.odometer.currentDistance | number : 2" type="text" class="form-control text-right" readonly=""/>
 							<div class="input-group-addon">KM</div>
 						</div>
 					</div>
@@ -64,7 +65,7 @@
 					<div class="form-group">
 						<label for="totalDistance">Distância total</label>
 						<div class="input-group">
-							<input id="totalDistance" ng-model="car.odometer.totalDistance | number : 2" type="text" class="form-control text-right" readonly="" />
+							<input id="totalDistance" ng-model="car.odometer.totalDistance | number : 2" type="text" class="form-control text-right" readonly=""/>
 							<div class="input-group-addon">KM</div>
 						</div>
 						<div class="text-right" style="margin-top: 5px;">
@@ -89,22 +90,3 @@
 	</h4>
 	<div ui-view="supplies" class=""></div>
 </div>
-
-
-
-<style>
-	.transformable {
-		-ms-transition: height 100ms linear;
-		-o-transition: height 100ms linear;
-		-webkit-transition: height 100ms linear;
-		transition: height 100ms linear;
-	}
-
-	.small {
-		height: 50px;
-	}
-
-	.big {
-		height: auto;
-	}
-</style>

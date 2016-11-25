@@ -55,6 +55,7 @@ namespace Matheus.Repository
 				item.Odometer.CurrentDistance = 0;
 			}
 
+			fuelSupply.FuelPrice = fuelType.Price;
 			fuelSupply.TotalPrice = fuelSupply.FuelQuantity * fuelType.Price;
 
 			fuelSupply.FuelType = fuelType;

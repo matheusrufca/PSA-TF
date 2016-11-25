@@ -1,4 +1,4 @@
-angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootstrap', 'toastr'])
+angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootstrap', 'angular.filter', 'toastr'])
 .config(function ($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/dashboard');
@@ -27,6 +27,9 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 			abstract: true,
 			parent: 'dashboard',
 			url: '/cars',
+			data: {
+				pageTitle: 'Carros'
+			},
 			views: {
 				'content@index': {
 					templateUrl: 'assets/views/cars/cars.list.html',
@@ -65,6 +68,9 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 					templateUrl: 'assets/views/supplies/supplies.list.html',
 					controller: 'FuelSupplyListController'
 				}
+			},
+			data: {
+				pageTitle: 'Abastecimentos'
 			}
 		})
 		.state('supplies.list', {
@@ -95,4 +101,9 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 				}
 			}
 		});
-});
+})
+.run(['$rootScope', '$state', '$stateParams',
+function ($rootScope, $state, $stateParams) {
+	$rootScope.$state = $state;
+	$rootScope.$stateParams = $stateParams;
+}]);

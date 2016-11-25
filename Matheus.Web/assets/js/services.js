@@ -114,7 +114,6 @@ angular.module('app')
 
 		return service;
 	})
-
 	.factory('fuelSupplyService', function ($http, $q, apiSettings, toastr) {
 		var self = {}, service = {};
 
