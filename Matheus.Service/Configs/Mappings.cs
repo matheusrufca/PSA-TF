@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Matheus.Data;
+using Matheus.DAL.Models;
 using Web.Models;
 
 namespace Matheus.Web.Configs.Mappings

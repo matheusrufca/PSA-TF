@@ -67,7 +67,10 @@
   <ItemGroup>
     <Compile Include="DatabaseSeed.cs" />
     <Compile Include="DatabaseContext.cs" />
-    <Compile Include="Models.cs" />
+    <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\FuelSupply.cs" />
+    <Compile Include="Models\FuelType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

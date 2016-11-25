@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Matheus.Data;
-using Matheus.Data.DAL;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
@@ -10,6 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Matheus.DAL;
+using Matheus.DAL.Models;
 using Web.Models;
 
 namespace Matheus.Web.Controllers

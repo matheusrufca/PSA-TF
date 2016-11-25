@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		PSA-TF_2017.pdf = PSA-TF_2017.pdf
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.Data", "Matheus.Data\Matheus.Data.csproj", "{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.Service", "Matheus.Service\Matheus.Service.csproj", "{0C76BC09-60C9-4656-B3D9-844E460417EA}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Matheus.Web(2)", "Matheus.Web\", "{232CFA85-BF0B-4B58-BE2D-596A9BCEF5B5}"
@@ -35,16 +33,14 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Matheus.Web(2)", "Matheus.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.Repository", "Matheus.Repository\Matheus.Repository.csproj", "{0EEAE6ED-E1FE-42D2-9E10-5A3FA428887D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matheus.DAL", "Matheus.DAL\Matheus.DAL.csproj", "{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C76BC09-60C9-4656-B3D9-844E460417EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C76BC09-60C9-4656-B3D9-844E460417EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C76BC09-60C9-4656-B3D9-844E460417EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +53,10 @@ Global
 		{0EEAE6ED-E1FE-42D2-9E10-5A3FA428887D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EEAE6ED-E1FE-42D2-9E10-5A3FA428887D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EEAE6ED-E1FE-42D2-9E10-5A3FA428887D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6ED2DB6-2E72-47E5-9260-A699FAE9EF35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

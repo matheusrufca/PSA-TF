@@ -1,4 +1,4 @@
-﻿using Matheus.Data.DAL;
+﻿using Matheus.DAL;
 using System.Data.Entity;
 using System.Web.Http;
 

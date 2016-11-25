@@ -49,19 +49,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repository.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="IRepositories\IFuelTypeRepository.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\CarRepository.cs" />
+    <Compile Include="IRepositories\ICarRepository.cs" />
+    <Compile Include="IRepositories\IFuelSupplyRepository.cs" />
+    <Compile Include="IRepositories\IRepository.cs" />
+    <Compile Include="Repositories\FuelSupplyRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Matheus.Data\Matheus.Data.csproj">
-      <Project>{e6ed2db6-2e72-47e5-9260-a699fae9ef35}</Project>
-      <Name>Matheus.Data</Name>
-    </ProjectReference>
+    <Compile Include="Repositories\FuelTypeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Matheus.DAL\Matheus.DAL.csproj">
+      <Project>{e6ed2db6-2e72-47e5-9260-a699fae9ef35}</Project>
+      <Name>Matheus.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

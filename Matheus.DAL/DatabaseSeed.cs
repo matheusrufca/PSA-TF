@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Matheus.DAL.Models;
 
-namespace Matheus.Data.DAL
+namespace Matheus.DAL
 {
 	public class DbDataInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<EFDataContext>
 	{

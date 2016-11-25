@@ -1,4 +1,6 @@
+using Matheus.DAL;
 using Matheus.Repository;
+using Matheus.Repository.IRepositories;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Matheus.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Matheus.Web.App_Start.NinjectWebCommon), "Stop")]
@@ -7,7 +9,6 @@ namespace Matheus.Web.App_Start
 {
 	using AutoMapper;
 	using Configs.Mappings;
-	using Data.DAL;
 	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 	using Ninject;
 	using Ninject.Web.Common;

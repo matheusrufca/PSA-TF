@@ -1,5 +1,5 @@
-﻿using Matheus.Data;
-using Matheus.Data.DAL;
+using Matheus.DAL;
+using Matheus.Repository.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -41,7 +41,7 @@ namespace Matheus.Repository
 			return items;
 		}
 
-		public virtual TEntity Get(int id)
+		public virtual TEntity GetById(int id)
 		{
 			TEntity item = null;
 
@@ -110,14 +110,13 @@ namespace Matheus.Repository
 
 		public virtual bool Contains(int id)
 		{
-			return this.Get(id) != null;
+			return _entitySet.Find(id) != null;
 		}
 
 		#endregion
 
 
 		#region PROTECTED METHODS
-
 
 
 		protected virtual TEntity Edit(TEntity item)
@@ -138,7 +137,6 @@ namespace Matheus.Repository
 
 			return item;
 		}
-
 
 
 		protected virtual void Remove(TEntity item)
@@ -173,38 +171,6 @@ namespace Matheus.Repository
 		public virtual void Dispose()
 		{
 			_context.Dispose();
-		}
-	}
-
-
-	public class CarRepository : BaseRepository<Car>, ICarRepository
-	{
-		public CarRepository(IUnitOfWork context) : base(context)
-		{
-		}
-
-		public Car AddFuelSupply(int id, FuelSupply fuelSupply)
-		{
-			Car item = null;
-
-			if (fuelSupply == null)
-				throw new ArgumentNullException("Fuel supply can not be null.");
-
-			try
-			{
-				fuelSupply.TotalPrice = fuelSupply.FuelQuantity*fuelSupply.FuelPrice;
-				fuelSupply.FueledAt = DateTime.Now;
-
-
-				item = _entitySet.Find(id);
-				item.FuelSupplies.Add(fuelSupply);
-				_context.SaveChanges();
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			return item;
 		}
 	}
 }

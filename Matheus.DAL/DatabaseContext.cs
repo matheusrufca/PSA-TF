@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Matheus.DAL.Models;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Matheus.Data.DAL
+namespace Matheus.DAL
 {
 	public class EFDataContext : DbContext, IUnitOfWork
 	{
@@ -35,11 +33,9 @@ namespace Matheus.Data.DAL
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Car>()
-				.HasMany(x => x.FuelSupplies);
+			modelBuilder.Entity<Car>();
 
-			modelBuilder.Entity<FuelSupply>()
-				.HasRequired(x => x.CarSupplied);
+			//modelBuilder.Configurations.Add(new FuelSupply.FuelSupplyMapping());
 
 			var typesToRegister = Assembly
 				.GetExecutingAssembly()

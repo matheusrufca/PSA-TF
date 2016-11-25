@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using Matheus.Data;
-using Matheus.Data.DAL;
+using Matheus.DAL;
+using Matheus.DAL.Models;
+using Matheus.Repository.IRepositories;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Matheus.Repository;
 using Web.Models;
 
 namespace Matheus.Web.Controllers.api
