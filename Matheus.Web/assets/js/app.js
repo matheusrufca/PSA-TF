@@ -3,88 +3,96 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 
 	$urlRouterProvider.otherwise('/dashboard');
 
-		$stateProvider
-			.state('index', {
-				abstract: true,
-				//url: '/',
-				views: {
-					'@': {
-						//templateUrl: 'assets/views/layout.html',
-						//controller: 'DashboardController'
-				
-					},
-					'sidebar@index': { templateUrl: 'assets/views/_sidebar.html', },
-					'main@index': { templateUrl: 'assets/views/_main.html', }
+	$stateProvider
+		.state('index', {
+			abstract: true,
+			//url: '/',
+			views: {
+				'@': {
+					//templateUrl: 'assets/views/layout.html',
+					//controller: 'DashboardController'
+
+				},
+				'sidebar@index': { templateUrl: 'assets/views/_sidebar.html', },
+				'main@index': { templateUrl: 'assets/views/_main.html', }
+			}
+		})
+		.state('dashboard', {
+			parent: 'index',
+			url: '/dashboard',
+			templateUrl: 'assets/views/cars/cars.list.html',
+			controller: 'CarListController'
+		})
+		.state('cars', {
+			abstract: true,
+			parent: 'dashboard',
+			url: '/cars',
+			views: {
+				'content@index': {
+					templateUrl: 'assets/views/cars/cars.list.html',
+					controller: 'CarListController'
 				}
-			})
-			.state('dashboard', {
-				parent: 'index',
-				url: '/dashboard',
-				templateUrl: 'assets/views/cars/cars.list.html',
-				controller: 'CarListController'
-			})
-			.state('cars', {
-				abstract: true,
-				parent: 'dashboard',
-				url: '/cars',
-				views: {
-					'content@index': {
-						templateUrl: 'assets/views/cars/cars.list.html',
-						controller: 'CarListController'
-					}
+			}
+		})
+		.state('cars.list', {
+			parent: 'cars',
+			url: '/',
+			views: {
+				'content@index': {
+					templateUrl: 'assets/views/cars/cars.list.html',
+					controller: 'CarListController'
 				}
-			})
-			.state('cars.list', {
-				parent: 'cars',
-				url: '/',
-				views: {
-					'content@index': {
-						templateUrl: 'assets/views/cars/cars.list.html',
-						controller: 'CarListController'
-					}
+			}
+		})
+		.state('cars.detail', {
+			parent: 'cars',
+			url: '/:id',
+			views: {
+				'content@index': {
+					templateUrl: 'assets/views/cars/cars.detail.html',
+					controller: 'CarDetailController'
 				}
-			})
-			.state('cars.detail', {
-				parent: 'cars',
-				url: '/:id',
-				views: {
-					'content@index': {
-						templateUrl: 'assets/views/cars/cars.detail.html',
-						controller: 'CarDetailController'
-					}
-				}
-			})
+			}
+		})
 
 
-			.state('fuelSupplies', {
-				abstract: true,
-				parent: 'dashboard',
-				url: '/fuelSupplies',
-				views: {
-					'content@index': {
-						templateUrl: 'assets/views/fuelSupplies/fuelSupplies.list.html',
-						controller: 'FuelSupplyListController'
-					}
+		.state('supplies', {
+			abstract: true,
+			parent: 'dashboard',
+			url: '/supplies',
+			views: {
+				'content@index': {
+					templateUrl: 'assets/views/supplies/supplies.list.html',
+					controller: 'FuelSupplyListController'
 				}
-			})
-			.state('fuelSupplies.list', {
-				parent: 'fuelSupplies',
-				url: '/',
-				views: {
-					'content@index': {
-						templateUrl: 'assets/views/fuelSupplies/fuelSupplies.list.html',
-						controller: 'FuelSupplyListController'
-					}
+			}
+		})
+		.state('supplies.list', {
+			parent: 'supplies',
+			url: '/',
+
+			resolve: {
+				suppliesData: function (fuelSupplyService) {
+					return fuelSupplyService.get().then(function (result) {
+						return result;
+					});
 				}
-			})
-			.state('fuelSupplies.detail', {
-				parent: 'fuelSupplies',
-				url: '/:id',
-				views: {
-					'content@index': {
-						templateUrl: 'assets/views/fuelSupplies/fuelSupplies.detail.html',
-						controller: 'FuelSupplyDetailController'
-					}
+			},
+			views: {
+				'content@index': {
+					templateUrl: 'assets/views/supplies/supplies.list.html',
+					controller: 'FuelSupplyListController'
 				}
-			});
-	});
+			}
+		})
+		.state('supplies.detail', {
+			parent: 'supplies',
+			url: '/:id',
+			views: {
+				'content@index': {
+					templateUrl: 'assets/views/supplies/supplies.detail.html',
+					controller: 'FuelSupplyDetailController'
+				}
+			}
+		});
+});

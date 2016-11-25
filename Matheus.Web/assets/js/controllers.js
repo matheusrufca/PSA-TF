@@ -122,22 +122,24 @@ angular.module('app')
 	})
 
 
-	.controller('ListSupplyController', function ($scope, $state, $stateParams, carService) {
+	.controller('FuelSupplyListController', function ($scope, $state, $stateParams, fuelSupplyService, suppliesData) {
 		var self = {};
 
-		$scope.car = $stateParams.car;
-		$scope.fuelSupplies = [];
-
+		$scope.fuelSupplies = suppliesData || [];
 
 		self.init = function () {
-			$scope.getFuelSupples();
+			//$scope.getFuelSupplies();
 		};
 
 
-		$scope.getFuelSupples = function () {
-			if (!$stateParams.id) { return; }
+		$scope.getFuelSupplies = function () {
+			function success(result) {
+				$scope.fuelSupplies = angular.copy(result);
+			};
 
-			$scope.fuelSupplies = angular.copy($stateParams.car.fuelSupplies) || [];
+			function error(err) { };
+
+			fuelSupplyService.get().then(success, error);
 		};
 
 

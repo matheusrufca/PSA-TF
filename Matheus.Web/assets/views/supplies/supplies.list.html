@@ -1,0 +1,48 @@
+
+<h2 class="sub-header">Section title</h2>
+
+<div class="row text-right" style="margin-bottom: 20px">
+	<div class="btn-group" role="group">
+		<button ng-click="getFuelSupplies()" class="btn btn-default  btn-sm">&nbsp;<i class="glyphicon glyphicon-refresh"></i>&nbsp;</button>
+	</div>
+</div>
+
+
+
+
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="">Carro</th>
+				<th class="text-center">Placa</th>
+				<th class="text-center">Quantidade</th>
+				<th class="text-center">Valor total</th>
+				<th class="">Combustível</th>
+				<th class="text-center">Data</th>
+				<th class="text-center">Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="x in fuelSupplies">
+				<td class="">{{x.carSupplied.model}}</td>
+				<td class="text-center">{{x.carSupplied.licencePlate | licencePlate}}</td>
+				<td class="text-center">{{x.fuelQuantity | number : 2}}</td>
+				<td class="text-center">{{x.totalPrice | currency}}</td>
+				<td class="">{{x.fuelType.name}}</td>
+				<td class="text-center">{{x.fueledAt | date}}</td>
+
+				<td class="text-center">
+					<a ui-sref="cars.detail({id: x.id})" class="btn btn-link btn-primary" title="Editar">
+						<i class="glyphicon glyphicon-pencil"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+<pre>
+	{{fuelSupplies | json}}
+</pre>
