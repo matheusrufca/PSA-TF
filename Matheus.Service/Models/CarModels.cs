@@ -8,7 +8,7 @@ namespace Web.Models
 {
 	public class CarModel
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		public string LicencePlate { get; set; }
 
@@ -35,7 +35,7 @@ namespace Web.Models
 
 	public class FuelSupplyModel
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		public FuelTypeModel FuelType { get; set; }
 
@@ -53,7 +53,7 @@ namespace Web.Models
 
 	public class FuelTypeModel
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		public string Name { get; set; }
 

@@ -8,21 +8,20 @@ using System.Threading.Tasks;
 
 namespace Matheus.Data
 {
-	
-	public class Blog
+	public abstract class BaseEntity
 	{
-		public int BlogId { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int Id { get; set; }
 
-		public string Name { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public DateTime ModifiedAt { get; set; }
 	}
 
-
-	
 
 	public class Car
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public Guid CarId { get; set; }
+		public int CarId { get; set; }
 		
 		public string LicencePlate { get; set; }
 
@@ -51,7 +50,7 @@ namespace Matheus.Data
 	{
 
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public Guid FuelSupplyId { get; set; }
+		public int FuelSupplyId { get; set; }
 
 		public FuelType FuelType { get; set; }
 
@@ -73,7 +72,7 @@ namespace Matheus.Data
 	public class FuelType
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		public string Name { get; set; }
 

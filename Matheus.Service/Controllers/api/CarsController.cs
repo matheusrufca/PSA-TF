@@ -9,6 +9,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Matheus.Repository;
 using Web.Models;
 
 namespace Matheus.Web.Controllers.api
@@ -16,30 +17,43 @@ namespace Matheus.Web.Controllers.api
 	public class CarsController : ApiController
 	{
 		private readonly IMapper _mapper;
-		private readonly DataContext _context;
+		private readonly EFDataContext _context;
+		private readonly ICarRepository _repository;
 
 
-		public CarsController(DataContext context, IMapper mapper)
+		public CarsController(ICarRepository carRepository, EFDataContext context, IMapper mapper)
 		{
 			this._context = context;
 			this._mapper = mapper;
+			this._repository = carRepository;
 		}
 
 		// GET: api/Cars
 		[ResponseType(typeof(IEnumerable<CarModel>))]
 		public IHttpActionResult GetCars()
 		{
-			var itemList = _context.Cars
-				.DistinctBy(x => x.LicencePlate.ToUpper())
-				.ToList();
-			var result = _mapper.Map<List<CarModel>>(itemList);
+			var result = Enumerable.Empty<CarModel>();
+
+
+			using (var repository = _repository)
+			{
+				//var itemList = _context.Cars
+				 //.DistinctBy(x => x.LicencePlate.ToUpper())
+				 //.ToList();
+				var itemList = _repository.Get()
+					.DistinctBy(x => x.LicencePlate.ToUpper())
+					.ToList();
+
+				result = _mapper.Map<List<CarModel>>(itemList);
+			}
+
 
 			return Ok(result);
 		}
 
 		// GET: api/Cars/5
 		[ResponseType(typeof(CarModel))]
-		public IHttpActionResult GetCar(Guid id)
+		public IHttpActionResult GetCar(int id)
 		{
 			Car car;
 			CarModel result;
@@ -55,7 +69,7 @@ namespace Matheus.Web.Controllers.api
 
 		// PUT: api/Cars/5
 		[ResponseType(typeof(CarModel))]
-		public IHttpActionResult PutCar(Guid id, EditCarViewModel model)
+		public IHttpActionResult PutCar(int id, EditCarViewModel model)
 		{
 			Car car = null;
 			CarModel result;
@@ -114,9 +128,37 @@ namespace Matheus.Web.Controllers.api
 			return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
 		}
 
+
+		// POST: api/Cars
+		[ResponseType(typeof(CarModel))]
+		public IHttpActionResult PostCar(int id, AddFuelSupplyViewModel model)
+		{
+			Car car = null;
+			CarModel result = null;
+
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				//car = _mapper.Map<CreateCarViewModel, Car>(model);
+
+				_context.Cars.Add(car);
+				_context.SaveChanges();
+				//result = _mapper.Map<Car, CarModel>(car);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			return Ok(result);
+		}
+
+
 		// DELETE: api/Cars/5
 		[ResponseType(typeof(CarModel))]
-		public IHttpActionResult DeleteCar(Guid id)
+		public IHttpActionResult DeleteCar(int id)
 		{
 			Car car = _context.Cars.Find(id);
 			CarModel result;
@@ -139,7 +181,7 @@ namespace Matheus.Web.Controllers.api
 			base.Dispose(disposing);
 		}
 
-		private bool CarExists(Guid id)
+		private bool CarExists(int id)
 		{
 			return _context.Cars.Any(e => e.CarId == id);
 		}

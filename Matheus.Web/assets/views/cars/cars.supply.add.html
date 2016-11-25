@@ -1,0 +1,49 @@
+<div>
+	<form id="formAddSupply" name="formAddSupply">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label for="model">Tipo de combustível</label>
+					<select ng-model="fuelSupply.fuelType" ng-options="x as x.name for x in fuelTypes track by x.id" class="form-control" required="">
+						<option value="" disabled="" selected="">Selecione</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="model">Quantidade</label>
+					<input ng-model="fuelSupply.fuelQuantity" class="form-control" type="number" min="1" max="1000" required="" />
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="fuelSupply.isNewSerie"> Nova série
+					</label>
+				</div>
+
+
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="model">Preço do combustível</label>
+					<div class="input-group">
+						<div class="input-group-addon">R$</div>
+						<input ng-model="fuelSupply.fuelType.price" class="form-control" readonly="" type="number" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="model">Total</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">R$</div>
+						<input ng-model="getTotalPrice()" class="form-control" readonly="" type="number" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<button class="btn btn-primary" ng-disabled="formAddSupply.$invalid" type="submit">Adicionar abastecimento</button>
+			<button class="btn btn-danger" type="reset">Cancelar</button>
+		</div>
+	</form>
+
+	<pre>{{fuelSupply | json}}</pre>
+</div>

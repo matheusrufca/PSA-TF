@@ -37,7 +37,7 @@ namespace Web.Models
 	public class EditCarViewModel : CarFormViewModel
 	{
 		[Required]
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		[Required]
 		public OdometerModel Odometer { get; set; }

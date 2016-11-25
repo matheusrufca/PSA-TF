@@ -17,10 +17,10 @@ namespace Matheus.Web.Controllers
 	public class FuelTypesController : ApiController
 	{
 		private readonly IMapper _mapper;
-		private readonly DataContext _context;
+		private readonly EFDataContext _context;
 
 
-		public FuelTypesController(DataContext context, IMapper mapper)
+		public FuelTypesController(EFDataContext context, IMapper mapper)
 		{
 			this._context = context;
 			this._mapper = mapper;
@@ -83,7 +83,7 @@ namespace Matheus.Web.Controllers
 			base.Dispose(disposing);
 		}
 
-		private bool FuelTypeExists(Guid id)
+		private bool FuelTypeExists(int id)
 		{
 			return _context.FuelTypes.Count(e => e.Id == id) > 0;
 		}

@@ -15,9 +15,9 @@ namespace Matheus.Web
 		private static void InitializeDatabase()
 		{
 
-			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataContext>());
+			Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EFDataContext>());
 
-			using (var dataContext = new DataContext())
+			using (var dataContext = new EFDataContext())
 			{
 				if (!Database.Exists("DefaultConnection"))
 				{

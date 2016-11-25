@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Matheus.Data.DAL
 {
-	public class DbDataInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<DataContext>
+	public class DbDataInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<EFDataContext>
 	{
-		protected override void Seed(DataContext context)
+		protected override void Seed(EFDataContext context)
 		{
 			this.AddFuelTypes(context); //add fuel types
 			this.AddCars(context); //add cars
 		}
 
 
-		private ICollection<FuelType> AddFuelTypes(DataContext context)
+		private ICollection<FuelType> AddFuelTypes(EFDataContext context)
 		{
 			var fuelTypes = new List<FuelType>
 			{
@@ -39,7 +39,7 @@ namespace Matheus.Data.DAL
 			return fuelTypes;
 		}
 
-		private ICollection<Car> AddCars(DataContext context)
+		private ICollection<Car> AddCars(EFDataContext context)
 		{
 			var cars = new List<Car>
 			{

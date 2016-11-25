@@ -1,0 +1,20 @@
+﻿<table class="table table-striped">
+	<thead>
+		<tr>
+			<th class="text-center">Quantidade</th>
+			<th class="text-center">Valor</th>
+			<th>Combustível</th>
+			<th class="text-center">Data</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="x in fuelSupplies">
+			<td class="text-center">{{x.fuelQuantity}}</td>
+			<td class="text-center">{{x.totalPrice}}</td>
+			<td class="text-center">{{x.fuelType}}</td>
+			<td class="text-center">
+				{{x.fueledAt | date}}
+			</td>
+		</tr>
+	</tbody>
+</table>

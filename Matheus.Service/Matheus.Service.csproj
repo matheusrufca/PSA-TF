@@ -737,6 +737,10 @@
       <Project>{e6ed2db6-2e72-47e5-9260-a699fae9ef35}</Project>
       <Name>Matheus.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Matheus.Repository\Matheus.Repository.csproj">
+      <Project>{0eeae6ed-e1fe-42d2-9e10-5a3fa428887d}</Project>
+      <Name>Matheus.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

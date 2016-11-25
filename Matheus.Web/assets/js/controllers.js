@@ -71,7 +71,6 @@ angular.module('app')
 			carService.getDetail(item_id).then(success, error);
 		};
 
-
 		$scope.save = function () {
 			function success(result) {
 				if (!result) { return; }
@@ -81,18 +80,21 @@ angular.module('app')
 
 			function error(err) { };
 
-
 			carService.save($scope.car).then(success, error);
 		};
 
 		$scope.remove = function () {
 			function success(result) {
-				$state.go('.child');
+				$state.go('^');
 			};
 
 			function error(err) { };
 
 			carService.remove($scope.car.id).then(success, error);
+		};
+
+		$scope.addSupply = function () {
+			$state.go('cars.addSupply', { id: $scope.car.id, car: $scope.car });
 		};
 
 		$scope.resetOdometer = function () {
@@ -117,4 +119,80 @@ angular.module('app')
 			}
 			return output;
 		}
+	})
+
+
+	.controller('ListSupplyController', function ($scope, $state, $stateParams, carService) {
+		var self = {};
+
+		$scope.car = $stateParams.car;
+		$scope.fuelSupplies = [];
+
+
+		self.init = function () {
+			$scope.getFuelSupples();
+		};
+
+
+		$scope.getFuelSupples = function () {
+			if (!$stateParams.id) { return; }
+
+			$scope.fuelSupplies = angular.copy($stateParams.car.fuelSupplies) || [];
+		};
+
+
+		self.init();
+	})
+
+	.controller('AddSupplyController', function ($scope, $state, $stateParams, carService, fuelTypeService) {
+		var self = {};
+
+		$scope.car = $stateParams.car;
+
+		$scope.fuelSupply = {};
+
+		$scope.fuelTypes = [];
+
+
+		$scope.getTotalPrice = function () {
+			if (!$scope.fuelSupply.fuelType) { return; }
+			if (!$scope.fuelSupply.fuelQuantity) { return; }
+
+			return $scope.fuelSupply.fuelQuantity * $scope.fuelSupply.fuelType.price;
+		};
+
+		self.init = function () {
+			self.getFuelTypes();
+		};
+
+
+		$scope.save = function () {
+			function success(result) {
+				if (!result) { return; }
+
+				$scope.fuelSupply = angular.copy(result);
+			};
+
+			function error(err) { };
+
+			var newItem = angular.copy($scope.fuelSupply);
+
+
+
+
+			carService.save(newItem).then(success, error);
+		};
+
+		self.getFuelTypes = function () {
+			function success(result) {
+				$scope.fuelTypes = angular.copy(result);
+			};
+
+			function error(err) { };
+
+			fuelTypeService.get().then(success, error);
+
+		};
+
+		self.init();
 	});

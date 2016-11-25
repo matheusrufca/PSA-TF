@@ -17,9 +17,9 @@ namespace Matheus.Web.Controllers.api
 	public class FuelSuppliesController : ApiController
     {
 		private readonly IMapper _mapper;
-		private readonly DataContext _context;
+		private readonly EFDataContext _context;
 
-		public FuelSuppliesController(DataContext context, IMapper mapper)
+		public FuelSuppliesController(EFDataContext context, IMapper mapper)
 		{
 			this._context = context;
 			this._mapper = mapper;
@@ -39,7 +39,7 @@ namespace Matheus.Web.Controllers.api
 
         // GET: api/FuelSupplies/5
         [ResponseType(typeof(FuelSupplyModel))]
-        public IHttpActionResult GetFuelSupply(Guid id)
+        public IHttpActionResult GetFuelSupply(int id)
         {
 			FuelSupply fuelSupply;
 			FuelSupplyModel result;
@@ -55,7 +55,7 @@ namespace Matheus.Web.Controllers.api
 
         // PUT: api/FuelSupplies/5
         [ResponseType(typeof(FuelSupplyModel))]
-        public IHttpActionResult PutFuelSupply(Guid id, FuelSupplyModel model)
+        public IHttpActionResult PutFuelSupply(int id, FuelSupplyModel model)
         {
 			FuelSupply fuelSupply = null;
 			FuelSupplyModel result;
@@ -118,7 +118,7 @@ namespace Matheus.Web.Controllers.api
 
         // DELETE: api/FuelSupplies/5
         [ResponseType(typeof(FuelSupply))]
-        public IHttpActionResult DeleteFuelSupply(Guid id)
+        public IHttpActionResult DeleteFuelSupply(int id)
         {
 			FuelSupply fuelSupply = _context.FuelSupplies.Find(id);
 			FuelSupplyModel result;
@@ -140,7 +140,7 @@ namespace Matheus.Web.Controllers.api
             base.Dispose(disposing);
         }
 
-        private bool FuelSupplyExists(Guid id)
+        private bool FuelSupplyExists(int id)
         {
             return _context.FuelSupplies.Count(e => e.FuelSupplyId == id) > 0;
         }
