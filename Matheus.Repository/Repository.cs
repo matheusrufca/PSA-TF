@@ -186,8 +186,16 @@ namespace Matheus.Repository
 		public Car AddFuelSupply(int id, FuelSupply fuelSupply)
 		{
 			Car item = null;
+
+			if (fuelSupply == null)
+				throw new ArgumentNullException("Fuel supply can not be null.");
+
 			try
 			{
+				fuelSupply.TotalPrice = fuelSupply.FuelQuantity*fuelSupply.FuelPrice;
+				fuelSupply.FueledAt = DateTime.Now;
+
+
 				item = _entitySet.Find(id);
 				item.FuelSupplies.Add(fuelSupply);
 				_context.SaveChanges();

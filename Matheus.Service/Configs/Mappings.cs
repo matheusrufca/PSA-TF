@@ -23,10 +23,10 @@ namespace Matheus.Web.Configs.Mappings
 		protected override void Configure()
 		{
 			CreateMap<Car, CarModel>()
-				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.CarId));
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id));
 
 			CreateMap<CarModel, Car>()
-				.ForMember(dest => dest.CarId, opts => opts.MapFrom(src => src.Id));
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id));
 
 			CreateMap<Car, CarFormViewModel>();
 			CreateMap<CarFormViewModel, Car>();
@@ -36,7 +36,7 @@ namespace Matheus.Web.Configs.Mappings
 				//.ForMember(d => d.Odometer, o => o.NullSubstitute(new Odometer()));
 
 			CreateMap<EditCarViewModel, Car>()
-				.ForMember(dest => dest.CarId, opts => opts.MapFrom(src => src.Id));
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id));
 
 
 			CreateMap<Odometer, OdometerModel>();
@@ -54,6 +54,16 @@ namespace Matheus.Web.Configs.Mappings
 		{
 			CreateMap<FuelSupply, FuelSupplyModel>();
 			CreateMap<FuelSupplyModel, FuelSupply>();
+
+
+			CreateMap<AddFuelSupplyViewModel, FuelSupply>()
+				.ForMember(dest => dest.FuelPrice, opts => opts.MapFrom(src => src.FuelType.Price));
+
+
+
+
+			CreateMap<FuelType, FuelTypeModel>();
+			CreateMap<FuelTypeModel, FuelType>();
 		}
 	}
 

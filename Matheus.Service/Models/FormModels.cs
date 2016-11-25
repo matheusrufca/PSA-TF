@@ -46,17 +46,10 @@ namespace Web.Models
 
 	public class AddFuelSupplyViewModel
 	{
-		public string FuelType { get; set; }
+		public FuelTypeModel FuelType { get; set; }
 
 		public string FuelQuantity { get; set; }
-
-		public string TotalPrice { get; set; }
-
-		public string FuelPrice { get; set; }
-
-
-		public DateTime FueledAt { get; set; }
-
+		
 		public bool IsNewSerie { get; set; }
 	}
 

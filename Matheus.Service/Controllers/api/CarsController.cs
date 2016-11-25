@@ -131,21 +131,19 @@ namespace Matheus.Web.Controllers.api
 
 		// POST: api/Cars
 		[ResponseType(typeof(CarModel))]
-		public IHttpActionResult PostCar(int id, AddFuelSupplyViewModel model)
+		[Route("api/cars/{id:int}/add_fuel_suppy")]
+		public IHttpActionResult PutAddFuelSupply(int id, AddFuelSupplyViewModel model)
 		{
-			Car car = null;
-			CarModel result = null;
+			Car result = null;
 
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
 			try
 			{
-				//car = _mapper.Map<CreateCarViewModel, Car>(model);
+				var fuelSupply = _mapper.Map<AddFuelSupplyViewModel, FuelSupply>(model);
 
-				_context.Cars.Add(car);
-				_context.SaveChanges();
-				//result = _mapper.Map<Car, CarModel>(car);
+				result = _repository.AddFuelSupply(id, fuelSupply);
 			}
 			catch (Exception ex)
 			{
@@ -183,7 +181,7 @@ namespace Matheus.Web.Controllers.api
 
 		private bool CarExists(int id)
 		{
-			return _context.Cars.Any(e => e.CarId == id);
+			return _context.Cars.Any(e => e.Id == id);
 		}
 	}
 }

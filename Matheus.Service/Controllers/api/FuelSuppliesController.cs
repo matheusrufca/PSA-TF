@@ -142,7 +142,7 @@ namespace Matheus.Web.Controllers.api
 
         private bool FuelSupplyExists(int id)
         {
-            return _context.FuelSupplies.Count(e => e.FuelSupplyId == id) > 0;
+            return _context.FuelSupplies.Count(e => e.Id == id) > 0;
         }
     }
 }

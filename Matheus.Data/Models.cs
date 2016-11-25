@@ -21,7 +21,7 @@ namespace Matheus.Data
 	public class Car
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int CarId { get; set; }
+		public int Id { get; set; }
 		
 		public string LicencePlate { get; set; }
 
@@ -50,15 +50,15 @@ namespace Matheus.Data
 	{
 
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int FuelSupplyId { get; set; }
+		public int Id { get; set; }
 
 		public FuelType FuelType { get; set; }
 
-		public string FuelQuantity { get; set; }
+		public int FuelQuantity { get; set; }
 
-		public string TotalPrice { get; set; }
+		public decimal TotalPrice { get; set; }
 
-		public string FuelPrice { get; set; }
+		public decimal FuelPrice { get; set; }
 
 		public DateTime FueledAt { get; set; }
 
