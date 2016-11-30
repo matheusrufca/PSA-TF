@@ -1,5 +1,10 @@
-<div class="row text-right" style="margin-bottom: 20px">
-	<div class="btn-group" role="group">
+<div class="row" style="margin-bottom: 20px">
+	<div class="col-xs-6 col-sm-4 col-md-3">
+
+		<input ng-model="carSearch" type="search" class="form-control input-sm" placeholder="Filtrar" />
+	</div>
+
+	<div class="btn-group pull-right" role="group">
 		<a ui-sref="cars.add" class="btn btn-default btn-sm">
 			<i class="glyphicon glyphicon-plus"></i> Novo
 		</a>
@@ -8,7 +13,8 @@
 		</button>
 	</div>
 </div>
-<div class="table-responsive">
+
+<div class="table-responsive row">
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
@@ -23,13 +29,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="x in cars">
+			<tr ng-repeat="x in cars| searchCar : carSearch | dateRange : filterStartDate : filterEndDate track by x.id">
 				<td class="text-center">{{x.licencePlate | licencePlate | uppercase}}</td>
 				<td>{{x.model}}</td>
 				<td>{{x.manufacturer}}</td>
 				<td class="text-center">{{x.year}}</td>
 				<td class="text-center">{{x.odometer.currentDistance}} / {{x.odometer.totalDistance}} km</td>
-				
+
 
 				<td class="text-center">{{x.getFuelAverage() | number : 2}}</td>
 				<td class="text-center">{{x.getCostAverage() | currency}}</td>

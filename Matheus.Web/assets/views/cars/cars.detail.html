@@ -46,6 +46,12 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label>Foto</label>
+						<input ng-model="car.pictureFile" type="file" base-sixty-four-input maxsize="3000"/>
+						<img ng-src="{{car.picture}}" src="#" style="width: 50px; height: 50px;"/>
+					</div>
 				</fieldset>
 			</div>
 
@@ -103,15 +109,15 @@
 		</div>
 
 		<hr />
-		
+
 		<div class="row">
 			<h4 style="margin-bottom: 20px;">
 				Abastecimentos
 
 				<div class="btn-group pull-right" role="group">
 					<!--<a ui-sref="cars.detail.supply.list" ng-if="showListFuelSupplies()" class="btn btn-default btn-sm ">
-					<i class="glyphicon glyphicon-th-list"></i> Listar
-				</a>-->
+						<i class="glyphicon glyphicon-th-list"></i> Listar
+					</a>-->
 					<a ui-sref="cars.detail.supply.add({id: car.id, car: car})" ng-if="showAddFuelSupplies()" class="btn btn-default btn-sm">
 						<i class="glyphicon glyphicon-plus"></i> Adicionar abastecimento
 					</a>
@@ -127,4 +133,4 @@
 
 
 
-<pre class="transformable hidden" ng-class="{'small':!isBig, 'big':isBig}" ng-click="isBig = !isBig">{{car | json}}</pre>
+<pre class="transformable" ng-class="{'small':!isBig, 'big':isBig}" ng-click="isBig = !isBig">{{car | json}}</pre>

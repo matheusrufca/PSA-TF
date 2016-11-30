@@ -19,9 +19,9 @@ namespace Web.Models
 		public string Manufacturer { get; set; }
 
 		public decimal FuelTankSize { get; set; }
+		public string Picture { get; set; }
 
 		public OdometerModel Odometer { get; set; }
-
 
 		public IEnumerable<FuelSupplyModel> FuelSupplies { get; set; }
 	}

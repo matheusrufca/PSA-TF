@@ -1,46 +1,48 @@
-<div class="row text-right" style="margin-bottom: 20px">
-	<div class="btn-group" role="group">
-		<input class="form-control input-sm"type="search"/>
+<div class="row" style="margin-bottom: 20px">
+	<div class="col-xs-6 col-sm-4 col-md-3">
+		<input ng-model="carSearch" type="search" class="form-control input-sm" placeholder="Filtrar" />
+	</div>
+	<div class="btn-group pull-right" role="group">
 		<button ng-click="getFuelSupplies()" class="btn btn-default  btn-sm">&nbsp;<i class="glyphicon glyphicon-refresh"></i>&nbsp;</button>
 	</div>
 </div>
 
 
-
-
 <div class="table-responsive">
-	<table class="table table-striped">
+	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
-				<!--<th class="">Carro</th>
-				<th class="text-center">Placa</th>-->
 				<th class="">Combustível</th>
-				<th class="text-center">Preço</th>
+				<th class="text-center">Preço litro</th>
 				<th class="text-center">Quantidade</th>
-				<th class="text-center">Valor total</th>
+				<th class="text-center">Distância</th>
+				<th class="text-center">Valor</th>
 				<th class="text-center">Data</th>
-				<th class="text-center">Ação</th>
 			</tr>
 		</thead>
-		<tbody ng-repeat="(key, value) in fuelSupplies | groupBy: 'carSupplied.id'">
+		<tbody ng-repeat="(key, value) in fuelSupplies | searchCarPlate : carSearch| groupBy: 'carSupplied.id'">
 			<tr>
-				<td class="bold" colspan="5">
+				<td class="bold" colspan="6">
 					{{value[key].carSupplied.model}} ({{value[key].carSupplied.licencePlate | licencePlate}})
 				</td>
 			</tr>
 			<tr ng-repeat="x in value">
 				<td class="">{{x.fuelType.name}}</td>
 				<td class="text-center">{{x.fuelPrice | currency}} L</td>
-				<td class="text-center">{{x.fuelQuantity | number}} L</td>
+				<td class="text-center">{{x.fuelQuantity | number : 0}} L</td>
+				<td class="text-center">{{x.distanceTravelled | number : 0}} KM</td>
 				<td class="text-center">{{x.totalPrice | currency}}</td>
 				<td class="text-center">{{x.fueledAt | date}}</td>
 
-				<td class="text-center">
-					<!--<a ui-sref="cars.detail({id: x.id})" class="btn btn-link btn-primary" title="Editar">
-						<i class="glyphicon glyphicon-pencil"></i>
-					</a>-->
-				</td>
 			</tr>
+		<tr>
+			<td class="bold text-right">Soma/Média</td>
+			<td class="text-center text-danger bold">{{getAverage(value, 'fuelPrice') | currency}}</td>
+			<td class="text-center text-danger bold">{{getAverage(value, 'fuelQuantity') | number : 2}}</td>
+			<td class="text-center text-danger bold">{{getTotal(value, 'distanceTravelled') | number}}</td>
+			<td class="text-center text-danger bold">{{getTotal(value, 'totalPrice') | currency}}</td>
+			<td class="text-center"></td>
+		</tr>
 		</tbody>
 	</table>
 </div>

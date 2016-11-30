@@ -84,7 +84,9 @@ namespace Matheus.Repository
 
 		public virtual TEntity Edit(int id, TEntity item)
 		{
-			item = this.GetById(id);
+			var entry = this.GetById(id);
+			_context.Entry(entry).State = EntityState.Detached;
+			//item = this.GetById(id);
 			return this.Edit(item);
 		}
 

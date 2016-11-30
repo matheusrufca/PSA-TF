@@ -50,6 +50,17 @@ namespace Matheus.DAL
 						CurrentDistance = 150,
 						TotalDistance = 35000
 					}
+				},
+				new Car {
+					LicencePlate = "CAR0002",
+					Model = "Siena",
+					Manufacturer = "Fiat",
+					Year = 2014,
+					FuelTankSize = 80,
+					Odometer = new Odometer {
+						CurrentDistance = 300,
+						TotalDistance = 35000
+					}
 				}
 			};
 

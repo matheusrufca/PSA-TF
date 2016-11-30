@@ -5,6 +5,7 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Matheus.Repository
 {

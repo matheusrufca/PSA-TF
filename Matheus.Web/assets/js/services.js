@@ -2,8 +2,6 @@ angular.module('app')
 	.constant("apiSettings", {
 		serviceUrl: 'http://localhost:22233/api'
 	})
-
-
 	.factory('Car', function ($linq, moment) {
 		function Car(data) {
 			if (data) {
@@ -41,8 +39,6 @@ angular.module('app')
 
 		return Car;
 	})
-
-
 	.factory('carService', function ($http, $q, apiSettings, toastr, Car) {
 		var self = {}, service = {};
 
@@ -179,9 +175,7 @@ angular.module('app')
 			return df.promise;
 		};
 
-		function isOk(statusCode) {
-			return statusCode >= 200 && statusCode < 300;
-		};
+
 
 		return service;
 	})
@@ -235,3 +229,10 @@ angular.module('app')
 		return service;
 	});
 
+
+
+
+
+window.isOk = function (statusCode) {
+	return statusCode >= 200 && statusCode < 300;
+};

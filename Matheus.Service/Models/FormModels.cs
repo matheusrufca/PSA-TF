@@ -24,7 +24,7 @@ namespace Web.Models
 		[Required]
 		public decimal FuelTankSize { get; set; }
 
-
+		public string Picture { get; set; }
 	}
 
 

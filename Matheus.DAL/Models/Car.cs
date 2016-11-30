@@ -8,7 +8,7 @@ namespace Matheus.DAL.Models
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
-		
+
 		public string LicencePlate { get; set; }
 
 		public string Model { get; set; }
@@ -18,6 +18,8 @@ namespace Matheus.DAL.Models
 		public string Manufacturer { get; set; }
 
 		public decimal FuelTankSize { get; set; }
+
+		public string Picture { get; set; }
 
 		public Odometer Odometer { get; set; }
 

@@ -1,4 +1,13 @@
-angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootstrap', 'angular.filter', 'toastr', 'datatables', 'angularMoment', 'angular-linq'])
+angular.module('string.js', [])
+	.factory('S', function () {
+		if (!window.S) {
+			throw "string.js is missing.";
+		}
+
+		return window.S;
+	});
+
+angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootstrap', 'angular.filter', 'toastr', 'datatables', 'angularMoment', 'angular-linq', 'string.js', 'naif.base64'])
 	.config(function ($stateProvider, $urlRouterProvider) {
 
 		$urlRouterProvider.otherwise('/dashboard');
@@ -22,6 +31,9 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 				url: '/dashboard',
 				templateUrl: 'assets/views/cars/cars.list.html',
 				controller: 'CarListController',
+				data: {
+					pageTitle: 'Dashboard'
+				},
 				resolve: {
 					carList: function ($stateParams, carService) {
 						return carService.get().then(function (result) {
@@ -180,4 +192,5 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 	.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
+		$rootScope.projectName = 'Controle de abastecimentos';
 	}]);
