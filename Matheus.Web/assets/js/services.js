@@ -91,6 +91,26 @@ angular.module('app')
 			return df.promise;
 		};
 
+		service.addFuelSupply = function (item_id, item) {
+			var df = $q.defer(), serviceUrl;
+
+			serviceUrl = apiSettings.serviceUrl + '/cars/' + item_id + '/add_fuel_suppy';
+
+			$http.put(serviceUrl, item).then(function (response) {
+				var result = response.data;
+				if (!result) { df.reject({}); return; }
+
+				df.resolve(result.data);
+				toastr.success(result.statusMessage);
+			}, function (err) {
+				df.reject(err); // reject promise
+
+				toastr.error(err.message || self.errorMsg);
+			});
+
+			return df.promise;
+		};
+
 		service.remove = function (item_id) {
 			var df = $q.defer(), serviceUrl;
 

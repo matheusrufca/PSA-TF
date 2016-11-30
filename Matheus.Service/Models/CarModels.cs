@@ -39,11 +39,11 @@ namespace Web.Models
 
 		public FuelTypeModel FuelType { get; set; }
 
-		public string FuelQuantity { get; set; }
+		public decimal FuelQuantity { get; set; }
 
-		public string TotalPrice { get; set; }
+		public decimal TotalPrice { get; set; }
 
-		public string FuelPrice { get; set; }
+		public decimal FuelPrice { get; set; }
 
 		public DateTime FueledAt { get; set; }
 

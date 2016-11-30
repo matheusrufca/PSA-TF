@@ -23,8 +23,8 @@ namespace Web.Models
 
 		[Required]
 		public decimal FuelTankSize { get; set; }
-		
-		
+
+
 	}
 
 
@@ -49,7 +49,9 @@ namespace Web.Models
 		public FuelTypeModel FuelType { get; set; }
 
 		public string FuelQuantity { get; set; }
-		
+
+		public decimal DistanceTravelled { get; set; }
+
 		public bool IsNewSerie { get; set; }
 	}
 

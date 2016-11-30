@@ -12,12 +12,20 @@
 					<label for="model">Quantidade</label>
 					<input ng-model="fuelSupply.fuelQuantity" class="form-control" type="number" min="1" max="1000" required="" />
 				</div>
+				<div class="form-group">
+					<label for="model">Distância percorrida</label>
+
+					<div class="input-group">
+						<input ng-model="fuelSupply.distanceTravelled" class="form-control" type="number" min="1" max="1000" required="" />
+						<div class="input-group-addon">KM</div>
+					</div>
+				</div>
+
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" ng-model="fuelSupply.isNewSerie"> Nova série
 					</label>
 				</div>
-
 
 			</div>
 			<div class="col-md-4">
@@ -25,7 +33,7 @@
 					<label for="model">Preço do combustível</label>
 					<div class="input-group">
 						<div class="input-group-addon">R$</div>
-						<input ng-model="fuelSupply.fuelType.price" class="form-control" readonly="" type="number" />
+						<input ng-model="fuelSupply.fuelType.price | number : 2" class="form-control" readonly="" type="text" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -33,17 +41,18 @@
 
 					<div class="input-group">
 						<div class="input-group-addon">R$</div>
-						<input ng-model="getTotalPrice()" class="form-control" readonly="" type="number" />
+						<input ng-model="getTotalPrice() | number : 2" class="form-control" readonly="" type="text" />
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<div>
-			<button class="btn btn-primary" ng-disabled="formAddSupply.$invalid" type="submit">Adicionar abastecimento</button>
-			<button class="btn btn-danger" type="reset">Cancelar</button>
+			<button class="btn btn-primary" ng-disabled="formAddSupply.$invalid" type="submit" ng-click="addSupply()">Adicionar abastecimento</button>
+			<a ui-sref="cars.detail" class="btn btn-danger"  >Cancelar</a>
 		</div>
 	</form>
 
-	<pre>{{fuelSupply | json}}</pre>
 </div>
+
+<pre>{{fuelSupply | json}}</pre>

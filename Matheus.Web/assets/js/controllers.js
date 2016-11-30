@@ -1,20 +1,18 @@
 angular.module('app')
 	.controller('DashboardController', function ($scope, $stateParams, carService) {
 	})
-	.controller('ListCtrl', function () { })
-	.controller('DetailCtrl', function ($scope, $stateParams) {
-		$scope.id = $stateParams.id;
-	})
 
 
-	.controller('CarListController', function ($scope, $state, $stateParams, carService) {
+	.controller('CarListController', function ($scope, $state, $stateParams, carService, carList) {
 		var self = {};
 
 		self.init = function () {
-			$scope.getCars();
+			if (!carList) {
+				$scope.getCars();
+			}
 		};
 
-		$scope.cars = [];
+		$scope.cars = carList || [];
 
 		$scope.getCars = function () {
 
@@ -43,20 +41,18 @@ angular.module('app')
 
 		self.init();
 	})
-	.controller('CarDetailController', function ($scope, $state, $stateParams, carService) {
+	.controller('CarDetailController', function ($scope, $state, $stateParams, carService, car) {
 		var self = {};
 
-		$scope.id = $stateParams.id;
-		$scope.car = {};
+		self.init = function() {
+			if (!car) {
+				$scope.getDetail($stateParams.id);
+			}
+		};
 
 
+		$scope.car = car || {};
 
-		$scope.$watch('id', function (newValue, oldValue) {
-			$scope.getDetail($scope.id);
-		});
-
-		$scope.cars = [];
-		$scope.car = {};
 
 		$scope.getDetail = function (item_id) {
 			if (!item_id) { return; }
@@ -76,6 +72,8 @@ angular.module('app')
 				if (!result) { return; }
 
 				$scope.car = angular.copy(result);
+				$state.go('cars.list');
+				//$state.go('.list', {}, { reload: true });
 			};
 
 			function error(err) { };
@@ -85,7 +83,8 @@ angular.module('app')
 
 		$scope.remove = function () {
 			function success(result) {
-				$state.go('^');
+				$state.go('cars.list');
+				//$state.go('.list', {}, { reload: true });
 			};
 
 			function error(err) { };
@@ -93,9 +92,6 @@ angular.module('app')
 			carService.remove($scope.car.id).then(success, error);
 		};
 
-		$scope.addSupply = function () {
-			$state.go('cars.addSupply', { id: $scope.car.id, car: $scope.car });
-		};
 
 		$scope.resetOdometer = function () {
 			if ($scope.car.id) {
@@ -110,6 +106,18 @@ angular.module('app')
 			return range(currentYear - 100, currentYear).reverse();
 		};
 
+		$scope.showSaveForm = function () {
+			return !$state.includes('cars.detail.supply.add');
+		};
+
+		$scope.showAddFuelSupplies = function () {
+			return $state.includes('cars.detail') && !$state.includes('cars.detail.supply.add');
+		};
+
+		$scope.showListFuelSupplies = function () {
+			return $state.includes('cars.detail');
+		};
+
 		function range(min, max, step) {
 			var output = [];
 			step = step || 1;
@@ -118,42 +126,39 @@ angular.module('app')
 				output.push(i);
 			}
 			return output;
-		}
-	})
-
-
-	.controller('FuelSupplyListController', function ($scope, $state, $stateParams, fuelSupplyService, suppliesData) {
-		var self = {};
-
-		$scope.fuelSupplies = suppliesData || [];
-
-		self.init = function () {
-			//$scope.getFuelSupplies();
 		};
-
-
-		$scope.getFuelSupplies = function () {
-			function success(result) {
-				$scope.fuelSupplies = angular.copy(result);
-			};
-
-			function error(err) { };
-
-			fuelSupplyService.get().then(success, error);
-		};
-
 
 		self.init();
 	})
 
-	.controller('AddSupplyController', function ($scope, $state, $stateParams, carService, fuelTypeService) {
+
+	.controller('FuelSupplyListController', function ($scope, $state, $stateParams) { })
+
+	.controller('AddSupplyController', function ($scope, $state, $stateParams, carService, fuelTypeService, fuelTypesList) {
 		var self = {};
 
 		$scope.car = $stateParams.car;
 
 		$scope.fuelSupply = {};
 
-		$scope.fuelTypes = [];
+		$scope.fuelTypes = fuelTypesList || [];
+
+
+		$scope.addSupply = function () {
+			var carId = $stateParams.id;
+			var newItem = angular.copy($scope.fuelSupply);
+
+			function success(result) {
+				if (!result) { return; }
+
+				$scope.car = angular.copy(result);
+				$state.go('cars.detail', {}, { reload: true });
+			};
+
+			function error(err) { };
+
+			carService.addFuelSupply(carId, newItem).then(success, error);
+		};
 
 
 		$scope.getTotalPrice = function () {
@@ -163,26 +168,11 @@ angular.module('app')
 			return $scope.fuelSupply.fuelQuantity * $scope.fuelSupply.fuelType.price;
 		};
 
+
 		self.init = function () {
-			self.getFuelTypes();
-		};
-
-
-		$scope.save = function () {
-			function success(result) {
-				if (!result) { return; }
-
-				$scope.fuelSupply = angular.copy(result);
-			};
-
-			function error(err) { };
-
-			var newItem = angular.copy($scope.fuelSupply);
-
-
-
-
-			carService.save(newItem).then(success, error);
+			if (!fuelTypesList) {
+				self.getFuelTypes();
+			}
 		};
 
 		self.getFuelTypes = function () {

@@ -49,17 +49,16 @@ namespace Matheus.Repository
 				throw new ArgumentNullException("Fuel supply cannot be null.");
 
 
-			if (fuelSupply.IsNewSerie)
-			{
-				item.Odometer.TotalDistance += item.Odometer.CurrentDistance;
-				item.Odometer.CurrentDistance = 0;
-			}
-
+			fuelSupply.FuelType = fuelType;
 			fuelSupply.FuelPrice = fuelType.Price;
 			fuelSupply.TotalPrice = fuelSupply.FuelQuantity * fuelType.Price;
-
-			fuelSupply.FuelType = fuelType;
 			fuelSupply.FueledAt = DateTime.Now;
+
+
+			if (fuelSupply.IsNewSerie)
+				this.ResetDistanceTravelled(item.Id);
+
+			this.AddDistanceTravelled(item.Id, fuelSupply.DistanceTravelled);
 
 			try
 			{
@@ -72,6 +71,35 @@ namespace Matheus.Repository
 			}
 
 			return item;
+		}
+
+
+		public void AddDistanceTravelled(int id, decimal distance)
+		{
+			var item = _entitySet.Find(id);
+
+			if (item == null)
+				throw new ObjectNotFoundException("Car not found.");
+
+			if (distance < 0)
+				throw new ArgumentOutOfRangeException("Distance must be greater then 0");
+
+			item.Odometer.CurrentDistance += distance;
+			item.Odometer.TotalDistance += distance;
+
+			base.Edit(item);
+		}
+
+		public void ResetDistanceTravelled(int id)
+		{
+			var item = _entitySet.Find(id);
+
+			if (item == null)
+				throw new ObjectNotFoundException("Car not found.");
+			
+			item.Odometer.CurrentDistance = 0;
+
+			base.Edit(item);
 		}
 	}
 }

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Matheus.DAL.EFDataContext" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIACAAAABAAAAAAAAAAAEBAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>DatabaseContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Matheus.DAL.DbDataInitializer">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAEAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>DatabaseSeed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matheus.DAL.Models.BaseEntity">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAABAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BaseEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matheus.DAL.Models.Car">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Matheus.DAL.Models.Car.CarMapping" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Car.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAgCAEAABAAAAAAAAAAAAAAAABAAAAAAAAgDAAAAAAA=</HashCode>
+      <FileName>Models\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matheus.DAL.Models.Odometer">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matheus.DAL.Models.FuelSupply">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Matheus.DAL.Models.FuelSupply.FuelSupplyMapping" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\FuelSupply.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAkCAAgAAAAAAAwAAAAAAAAAAAAAQAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\FuelSupply.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Matheus.DAL.Models.FuelType">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FuelType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Matheus.DAL.IUnitOfWork">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DatabaseContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

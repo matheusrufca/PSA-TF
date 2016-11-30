@@ -34,8 +34,8 @@ namespace Matheus.DAL.Models
 
 	public class Odometer
 	{
-		public int CurrentDistance { get; set; }
+		public decimal CurrentDistance { get; set; }
 
-		public int TotalDistance { get; set; }
+		public decimal TotalDistance { get; set; }
 	}
 }

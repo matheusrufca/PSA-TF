@@ -1,24 +1,22 @@
-
-
 <div>
+	<!--<h4 class="sub-header" ng-if="car.id">{{car.model}} ({{car.licencePlate}})</h4>-->
 	<form id="form_car" name="form_car">
-		<!--<h4 class="sub-header" ng-if="car.id">{{car.model}} ({{car.licencePlate}})</h4>-->
-		<input ng-model="car.id" type="hidden"/>
+		<input ng-model="car.id" type="hidden" />
 		<div class="row">
 			<div class="col-md-8">
 				<fieldset>
-					<legend>{{car.model}} ({{car.licencePlate}})</legend>
+					<legend ng-if="car.id">{{car.model}} ({{car.licencePlate}})</legend>
 
 					<!-- model -->
 					<div class="form-group">
 						<label for="model">Modelo</label>
-						<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" required="" maxlength="255"/>
+						<input id="model" ng-model="car.model" type="text" class="form-control" placeholder="Modelo" required="" maxlength="255" />
 					</div>
 
 					<!-- manufacturer -->
 					<div class="form-group">
 						<label for="manufacturer">Fabricante</label>
-						<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" required="" maxlength="255"/>
+						<input id="manufacturer" ng-model="car.manufacturer" type="text" class="form-control" placeholder="Fabricante" required="" maxlength="255" />
 					</div>
 
 					<div class="row">
@@ -26,7 +24,7 @@
 						<div class="col-md-4 ">
 							<div class="form-group">
 								<label for="licencePlate">Placa</label>
-								<input id="licencePlate" ng-model="car.licencePlate" type="text" class="form-control" placeholder="Placa" required="" maxlength="7"/>
+								<input id="licencePlate" ng-model="car.licencePlate | uppercase" type="text" class="form-control" placeholder="Placa" required="" maxlength="7" />
 							</div>
 						</div>
 
@@ -44,7 +42,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="fuelTankSize">Tanque de combustível</label>
-								<input id="fuelTankSize" ng-model="car.fuelTankSize" type="number" class="form-control" placeholder="Quantidade" required="" min="1" max="1000"/>
+								<input id="fuelTankSize" ng-model="car.fuelTankSize " type="number" class="form-control" placeholder="Quantidade" required="" min="1" max="1000" />
 							</div>
 						</div>
 					</div>
@@ -57,7 +55,7 @@
 					<div class="form-group">
 						<label for="currentDistance">Distância parcial</label>
 						<div class="input-group">
-							<input id="currentDistance" ng-model="car.odometer.currentDistance | number : 2" type="text" class="form-control text-right" readonly=""/>
+							<input id="currentDistance" ng-model="car.odometer.currentDistance | number : 2" type="text" class="form-control text-right" readonly="" />
 							<div class="input-group-addon">KM</div>
 						</div>
 					</div>
@@ -65,7 +63,7 @@
 					<div class="form-group">
 						<label for="totalDistance">Distância total</label>
 						<div class="input-group">
-							<input id="totalDistance" ng-model="car.odometer.totalDistance | number : 2" type="text" class="form-control text-right" readonly=""/>
+							<input id="totalDistance" ng-model="car.odometer.totalDistance | number : 2" type="text" class="form-control text-right" readonly="" />
 							<div class="input-group-addon">KM</div>
 						</div>
 						<div class="text-right" style="margin-top: 5px;">
@@ -75,18 +73,32 @@
 				</fieldset>
 			</div>
 		</div>
-		<div class="form-group">
+		<div ng-show="showSaveForm()" class="form-group">
 			<button type="submit" ng-click="save()" class="btn btn-primary" ng-disabled="form_car.$invalid">Salvar</button>
-			<button ng-click="remove()" class="btn btn-danger float-left">Excluir</button>
+			<button ng-click="remove()" class="btn btn-danger float-left" type="reset">Excluir</button>
 		</div>
 	</form>
-	<pre class="transformable" ng-class="{'small':!isBig, 'big':isBig}" ng-click="isBig = !isBig">{{car | json}}</pre>
 
-	<h4>
-		Abastecimentos
-		<a class="btn btn-default btn-sm pull-right" ui-sref="cars.detail.supply.add({id: car.id, car: car})">
-			<i class="glyphicon glyphicon-plus"></i> Adicionar abastecimento
-		</a>
-	</h4>
-	<div ui-view="supplies" class=""></div>
+	<div ng-if="car.id">
+		<h4>
+			Abastecimentos
+
+			<div class="btn-group pull-right" role="group">
+				<!--<a ui-sref="cars.detail.supply.list" ng-if="showListFuelSupplies()" class="btn btn-default btn-sm ">
+					<i class="glyphicon glyphicon-th-list"></i> Listar
+				</a>-->
+				<a ui-sref="cars.detail.supply.add({id: car.id, car: car})" ng-if="showAddFuelSupplies()" class="btn btn-default btn-sm">
+					<i class="glyphicon glyphicon-plus"></i> Adicionar abastecimento
+				</a>
+			</div>
+		</h4>
+
+		<div ui-view="supplies" class="">
+			<ng-include src="'assets/views/cars/cars.supply.list.html'"></ng-include>
+		</div>
+	</div>
 </div>
+
+
+
+<pre class="transformable hidden" ng-class="{'small':!isBig, 'big':isBig}" ng-click="isBig = !isBig">{{car | json}}</pre>
