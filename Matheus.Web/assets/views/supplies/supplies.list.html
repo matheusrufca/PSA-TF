@@ -1,5 +1,6 @@
 <div class="row text-right" style="margin-bottom: 20px">
 	<div class="btn-group" role="group">
+		<input class="form-control input-sm"type="search"/>
 		<button ng-click="getFuelSupplies()" class="btn btn-default  btn-sm">&nbsp;<i class="glyphicon glyphicon-refresh"></i>&nbsp;</button>
 	</div>
 </div>
@@ -8,7 +9,7 @@
 
 
 <div class="table-responsive">
-	<table class="table table-striped" datatable="">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<!--<th class="">Carro</th>
@@ -25,11 +26,6 @@
 			<tr>
 				<td class="bold" colspan="5">
 					{{value[key].carSupplied.model}} ({{value[key].carSupplied.licencePlate | licencePlate}})
-				</td>
-				<td class="text-center" colspan="">
-					<a ui-sref="cars.detail({id: x.id})" class="btn btn-default btn-sm" title="Novo">
-						<i class="glyphicon glyphicon-plus"></i> Novo
-					</a>
 				</td>
 			</tr>
 			<tr ng-repeat="x in value">

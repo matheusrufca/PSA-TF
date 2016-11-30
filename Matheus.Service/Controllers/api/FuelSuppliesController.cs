@@ -10,6 +10,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Matheus.DAL.Models;
+using Matheus.Repository.IRepositories;
 using Web.Models;
 
 namespace Matheus.Web.Controllers.api
@@ -17,12 +18,12 @@ namespace Matheus.Web.Controllers.api
 	public class FuelSuppliesController : ApiController
     {
 		private readonly IMapper _mapper;
-		private readonly EFDataContext _context;
+		private readonly IFuelSupplyRepository _repository;
 
-		public FuelSuppliesController(EFDataContext context, IMapper mapper)
+		public FuelSuppliesController(IFuelSupplyRepository fuelSupplyRepository, IMapper mapper)
 		{
-			this._context = context;
 			this._mapper = mapper;
+			this._repository = fuelSupplyRepository;
 		}
 
 
@@ -31,118 +32,19 @@ namespace Matheus.Web.Controllers.api
 		[ResponseType(typeof(IEnumerable<FuelSupplyModel>))]
 		public IHttpActionResult GetFuelSupplies()
         {
-			var itemList = _context.FuelSupplies.AsEnumerable();
+			var itemList = _repository.Get().AsEnumerable();
 			var result = _mapper.Map<IEnumerable<FuelSupply>, IEnumerable<FuelSupply>>(itemList);
 
 			return Ok(result);
 		}
-
-        // GET: api/FuelSupplies/5
-        [ResponseType(typeof(FuelSupplyModel))]
-        public IHttpActionResult GetFuelSupply(int id)
-        {
-			FuelSupply fuelSupply;
-			FuelSupplyModel result;
-
-			fuelSupply = _context.FuelSupplies.Find(id);
-			result = _mapper.Map<FuelSupplyModel>(fuelSupply);
-
-			if (fuelSupply == null)
-				return NotFound();
-
-			return Ok(result);
-		}
-
-        // PUT: api/FuelSupplies/5
-        [ResponseType(typeof(FuelSupplyModel))]
-        public IHttpActionResult PutFuelSupply(int id, FuelSupplyModel model)
-        {
-			FuelSupply fuelSupply = null;
-			FuelSupplyModel result;
-
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
-
-			if (id != model.Id)
-				return BadRequest();
-
-			if (!FuelSupplyExists(id))
-				return NotFound();
-
-			try
-			{
-				fuelSupply = _mapper.Map<FuelSupply>(model);
-				_context.Entry(fuelSupply).State = EntityState.Modified;
-				_context.SaveChanges();
-			}
-			catch (DbUpdateConcurrencyException ex)
-			{
-				throw ex;
-			}
-			finally
-			{
-				result = _mapper.Map<FuelSupplyModel>(fuelSupply);
-			}
-
-			return Ok(result);
-		}
-
-        // POST: api/FuelSupplies
-        [ResponseType(typeof(FuelSupply))]
-        public IHttpActionResult PostFuelSupply(AddFuelSupplyViewModel model)
-        {
-			FuelSupply fuelSupply = null;
-			FuelSupplyModel result;
-
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
-
-			try
-			{
-				fuelSupply = _mapper.Map<AddFuelSupplyViewModel, FuelSupply>(model);
-
-				_context.FuelSupplies.Add(fuelSupply);
-				_context.SaveChanges();
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-			finally
-			{
-				result = _mapper.Map<FuelSupply, FuelSupplyModel>(fuelSupply);
-			}
-
-			return CreatedAtRoute("DefaultApi", new { id = result.Id }, result);
-		}
-
-        // DELETE: api/FuelSupplies/5
-        [ResponseType(typeof(FuelSupply))]
-        public IHttpActionResult DeleteFuelSupply(int id)
-        {
-			FuelSupply fuelSupply = _context.FuelSupplies.Find(id);
-			FuelSupplyModel result;
-			if (fuelSupply == null)
-				return NotFound();
-
-			_context.FuelSupplies.Remove(fuelSupply);
-			_context.SaveChanges();
-			result = _mapper.Map<FuelSupply, FuelSupplyModel>(fuelSupply);
-
-			return Ok(result);
-		}
+		
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                _context.Dispose();
+                _repository.Dispose();
             
             base.Dispose(disposing);
-        }
-
-        private bool FuelSupplyExists(int id)
-        {
-            return _context.FuelSupplies.Count(e => e.Id == id) > 0;
         }
     }
 }

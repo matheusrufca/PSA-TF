@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Matheus.DAL;
 using Matheus.DAL.Models;
 using Matheus.Repository.IRepositories;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
@@ -17,13 +15,11 @@ namespace Matheus.Web.Controllers.api
 	public class CarsController : ApiController
 	{
 		private readonly IMapper _mapper;
-		private readonly EFDataContext _context;
 		private readonly ICarRepository _repository;
 
 
-		public CarsController(ICarRepository carRepository, EFDataContext context, IMapper mapper)
+		public CarsController(ICarRepository carRepository, IMapper mapper)
 		{
-			this._context = context;
 			this._mapper = mapper;
 			this._repository = carRepository;
 		}
@@ -58,7 +54,7 @@ namespace Matheus.Web.Controllers.api
 			Car car;
 			CarModel result;
 
-			car = _context.Cars.Find(id);
+			car = _repository.GetById(id);
 			result = _mapper.Map<CarModel>(car);
 
 			if (car == null)
@@ -86,8 +82,10 @@ namespace Matheus.Web.Controllers.api
 			try
 			{
 				car = _mapper.Map<Car>(model);
-				_context.Entry(car).State = EntityState.Modified;
-				_context.SaveChanges();
+
+				_repository.Edit(car.Id, car);
+				//_context.Entry(car).State = EntityState.Modified;
+				//_context.SaveChanges();
 			}
 			catch (DbUpdateConcurrencyException ex)
 			{
@@ -116,8 +114,9 @@ namespace Matheus.Web.Controllers.api
 			{
 				car = _mapper.Map<CreateCarViewModel, Car>(model);
 
-				_context.Cars.Add(car);
-				_context.SaveChanges();
+				_repository.Add(car);
+				//_context.Cars.Add(car);
+				//_context.SaveChanges();
 				result = _mapper.Map<Car, CarModel>(car);
 			}
 			catch (Exception ex)
@@ -158,30 +157,25 @@ namespace Matheus.Web.Controllers.api
 		[ResponseType(typeof(CarModel))]
 		public IHttpActionResult DeleteCar(int id)
 		{
-			Car car = _context.Cars.Find(id);
-			CarModel result;
-			if (car == null)
-				return NotFound();
+			_repository.Remove(id);
+			//_context.Cars.Remove(car);
+			//_context.SaveChanges();
+			//result = _mapper.Map<Car, CarModel>(car);
 
-			_context.Cars.Remove(car);
-			_context.SaveChanges();
-			result = _mapper.Map<Car, CarModel>(car);
-
-			return Ok(result);
+			return Ok();
 		}
 
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
-			{
-				_context.Dispose();
-			}
+				_repository.Dispose();
+			
 			base.Dispose(disposing);
 		}
 
 		private bool CarExists(int id)
 		{
-			return _context.Cars.Any(e => e.Id == id);
+			return _repository.Contains(id);
 		}
 	}
 }

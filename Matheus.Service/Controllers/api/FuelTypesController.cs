@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
+using Matheus.DAL.Models;
+using Matheus.Repository.IRepositories;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Matheus.DAL;
-using Matheus.DAL.Models;
 using Web.Models;
 
 namespace Matheus.Web.Controllers
@@ -17,20 +15,20 @@ namespace Matheus.Web.Controllers
 	public class FuelTypesController : ApiController
 	{
 		private readonly IMapper _mapper;
-		private readonly EFDataContext _context;
+		private readonly IFuelTypeRepository _repository;
 
 
-		public FuelTypesController(EFDataContext context, IMapper mapper)
+		public FuelTypesController(IFuelTypeRepository fuelTypeRepository, IMapper mapper)
 		{
-			this._context = context;
 			this._mapper = mapper;
+			this._repository = fuelTypeRepository;
 		}
 
 		// GET: api/FuelTypes
 		[ResponseType(typeof(IEnumerable<FuelTypeModel>))]
 		public IHttpActionResult GetFuelTypes()
 		{
-			var itemList = _context.FuelTypes.DistinctBy(x => x.Name.ToUpper());
+			var itemList = _repository.Get().DistinctBy(x => x.Name.ToUpper());
 			var result = _mapper.Map<IEnumerable<FuelType>, IEnumerable<FuelTypeModel>>(itemList);
 
 			return Ok(result);
@@ -51,11 +49,10 @@ namespace Matheus.Web.Controllers
 			try
 			{
 				fuelType = _mapper.Map<FuelType>(model);
-				_context.FuelTypes.Add(fuelType);
-				_context.SaveChanges();
+				_repository.Add(fuelType);
 				model = _mapper.Map<FuelTypeModel>(fuelType);
 			}
-			catch (DbUpdateException)
+			catch (DbUpdateException ex)
 			{
 				if (FuelTypeExists(fuelType.Id))
 				{
@@ -63,7 +60,7 @@ namespace Matheus.Web.Controllers
 				}
 				else
 				{
-					throw;
+					throw ex;
 				}
 			}
 			catch (Exception ex)
@@ -78,14 +75,14 @@ namespace Matheus.Web.Controllers
 		{
 			if (disposing)
 			{
-				_context.Dispose();
+				_repository.Dispose();
 			}
 			base.Dispose(disposing);
 		}
 
 		private bool FuelTypeExists(int id)
 		{
-			return _context.FuelTypes.Count(e => e.Id == id) > 0;
+			return _repository.Contains(id);
 		}
 	}
 }

@@ -45,6 +45,8 @@ namespace Web.Models
 
 		public decimal FuelPrice { get; set; }
 
+		public decimal DistanceTravelled { get; set; }
+
 		public DateTime FueledAt { get; set; }
 
 		public bool IsNewSerie { get; set; }

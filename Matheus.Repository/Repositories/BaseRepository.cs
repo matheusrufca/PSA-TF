@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Matheus.Repository
 {
-	public class BaseRepository<TEntity> : IDisposable, IRepository<TEntity> where TEntity : class
+	public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
 		internal readonly EFDataContext _context;
 		internal readonly IDbSet<TEntity> _entitySet;
@@ -84,6 +84,7 @@ namespace Matheus.Repository
 
 		public virtual TEntity Edit(int id, TEntity item)
 		{
+			item = this.GetById(id);
 			return this.Edit(item);
 		}
 
@@ -126,7 +127,7 @@ namespace Matheus.Repository
 
 			try
 			{
-				_entitySet.Attach(item);
+				//_entitySet.Attach(item);
 				_context.Entry(item).State = EntityState.Modified;
 				_context.SaveChanges();
 			}

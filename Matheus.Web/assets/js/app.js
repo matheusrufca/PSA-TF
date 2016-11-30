@@ -1,4 +1,4 @@
-angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootstrap', 'angular.filter', 'toastr', 'datatables'])
+angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootstrap', 'angular.filter', 'toastr', 'datatables', 'angularMoment', 'angular-linq'])
 	.config(function ($stateProvider, $urlRouterProvider) {
 
 		$urlRouterProvider.otherwise('/dashboard');
@@ -152,9 +152,8 @@ angular.module('app', ['ngAnimate', 'ui.router', 'ui.router.default', 'ui.bootst
 			.state('supplies.list', {
 				parent: 'supplies',
 				url: '/',
-
 				resolve: {
-					suppliesData: function (fuelSupplyService) {
+					fuelSupplyList: function (fuelSupplyService) {
 						return fuelSupplyService.get().then(function (result) {
 							return result;
 						});

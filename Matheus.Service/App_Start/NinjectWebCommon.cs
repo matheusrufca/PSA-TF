@@ -1,4 +1,5 @@
 using Matheus.DAL;
+using Matheus.DAL.Models;
 using Matheus.Repository;
 using Matheus.Repository.IRepositories;
 
@@ -75,6 +76,8 @@ namespace Matheus.Web.App_Start
 			kernel.Bind<IUnitOfWork>().To<EFDataContext>().InRequestScope();
 			kernel.Bind(typeof(IRepository<>)).To(typeof(BaseRepository<>));
 			kernel.Bind<ICarRepository>().To<CarRepository>();
+			kernel.Bind<IFuelSupplyRepository>().To<FuelSupplyRepository>();
+			kernel.Bind<IFuelTypeRepository>().To<FuelTypeRepository>();
 
 			// Da mesma forma, quando um construtor pedir por uma instância de uma
 			// classe que implemente a interface IPessoaRepositorio, o Ninject 

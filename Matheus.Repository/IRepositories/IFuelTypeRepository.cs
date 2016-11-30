@@ -1,9 +1,9 @@
 ﻿using Matheus.DAL.Models;
-using System;
+using System.Collections.Generic;
 
 namespace Matheus.Repository.IRepositories
 {
-	public interface IFuelTypeRepository : IRepository<FuelType>, IDisposable
+	public interface IFuelTypeRepository: IRepository<FuelType>
 	{
 	}
 }

@@ -1,6 +1,10 @@
 ﻿using Matheus.DAL;
 using Matheus.DAL.Models;
 using Matheus.Repository.IRepositories;
+using System;
+using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Linq;
 
 namespace Matheus.Repository
 {

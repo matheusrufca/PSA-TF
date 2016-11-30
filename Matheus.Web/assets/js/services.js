@@ -2,7 +2,48 @@ angular.module('app')
 	.constant("apiSettings", {
 		serviceUrl: 'http://localhost:22233/api'
 	})
-	.factory('carService', function ($http, $q, apiSettings, toastr) {
+
+
+	.factory('Car', function ($linq, moment) {
+		function Car(data) {
+			if (data) {
+				this.setData(data);
+			}
+		};
+
+		Car.prototype = {
+			setData: function (data) {
+				angular.extend(this, data);
+			},
+			getFuelAverage: function () {
+				var fuelSupplies = this.fuelSupplies || [];
+				var totalFuel = 0, totalDistance = 0;
+
+				angular.forEach(fuelSupplies, function (item, i) {
+					totalFuel += item.fuelQuantity;
+					totalDistance += item.distanceTravelled;
+				});
+
+				return totalDistance / totalFuel;
+			},
+			getCostAverage: function () {
+				var fuelSupplies = this.fuelSupplies || [];
+				var totalPrice = 0, totalDistance = 0;
+
+				angular.forEach(fuelSupplies, function (item, i) {
+					totalPrice += item.totalPrice;
+					totalDistance += item.distanceTravelled;
+				});
+
+				return totalDistance / totalPrice;
+			}
+		};
+
+		return Car;
+	})
+
+
+	.factory('carService', function ($http, $q, apiSettings, toastr, Car) {
 		var self = {}, service = {};
 
 		self.errorMsg = 'Ops, ocorreu um erro';
@@ -13,9 +54,14 @@ angular.module('app')
 			serviceUrl = apiSettings.serviceUrl + '/cars';
 
 			$http.get(serviceUrl).then(function (response) {
-				if (!response.data) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 
-				df.resolve(response.data.data);
+				var mappedData = (response.data.data || []).map(function (x) {
+					return new Car(x);
+				});
+
+
+				df.resolve(mappedData);
 			}, function (err) {
 				df.reject(err); // reject promise
 
@@ -30,9 +76,10 @@ angular.module('app')
 			serviceUrl = apiSettings.serviceUrl + '/cars/' + item_id;
 
 			$http.get(serviceUrl).then(function (response) {
-				if (!response.data) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 
-				df.resolve(response.data.data);
+
+				df.resolve(new Car(response.data.data || {}));
 			}, function (err) {
 				df.reject(err); // reject promise
 
@@ -58,7 +105,7 @@ angular.module('app')
 
 			$http.post(serviceUrl, item).then(function (response) {
 				var result = response.data;
-				if (!result) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 
 				df.resolve(result.data);
 				toastr.success(result.statusMessage);
@@ -78,7 +125,7 @@ angular.module('app')
 
 			$http.put(serviceUrl, item).then(function (response) {
 				var result = response.data;
-				if (!result) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 
 				df.resolve(result.data);
 				toastr.success(result.statusMessage);
@@ -119,7 +166,7 @@ angular.module('app')
 			$http.delete(serviceUrl).then(function (response) {
 				var result = response.data;
 
-				if (!result) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 				df.resolve(response.data.data);
 
 				toastr.success(result.statusMessage);
@@ -130,6 +177,10 @@ angular.module('app')
 			});
 
 			return df.promise;
+		};
+
+		function isOk(statusCode) {
+			return statusCode >= 200 && statusCode < 300;
 		};
 
 		return service;
@@ -145,7 +196,7 @@ angular.module('app')
 			serviceUrl = apiSettings.serviceUrl + '/fuelSupplies';
 
 			$http.get(serviceUrl).then(function (response) {
-				if (!response.data) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 
 				df.resolve(response.data.data);
 			}, function (err) {
@@ -169,7 +220,7 @@ angular.module('app')
 			var df = $q.defer();
 
 			$http.get(self.apiServiceUrl).then(function (response) {
-				if (!response.data) { df.reject({}); return; }
+				if (!isOk(response.status)) { df.reject({}); return; }
 
 				df.resolve(response.data.data);
 			}, function (err) {

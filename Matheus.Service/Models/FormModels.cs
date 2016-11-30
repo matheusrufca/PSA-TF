@@ -9,6 +9,7 @@ namespace Web.Models
 	public class CarFormViewModel
 	{
 		[Required]
+		[StringLength(7)]
 		public string LicencePlate { get; set; }
 
 		[Required]
@@ -18,7 +19,6 @@ namespace Web.Models
 		public int? Year { get; set; }
 
 		[Required]
-		[StringLength(7)]
 		public string Manufacturer { get; set; }
 
 		[Required]
